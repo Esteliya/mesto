@@ -1,0 +1,5 @@
+.card__image{
+    display: block;
+    width: 100%;
+    line-height: 0;
+}
