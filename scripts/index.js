@@ -42,3 +42,36 @@ for (let i = 0; i < likeButton.length; i++) {
         likeButton[i].classList.toggle("button-like_activ");
       });
 }
+
+
+
+
+let nameCard = document.getElementById('name-card');
+let images = document.getElementById('images');
+let addCardPopup = document.getElementById('add-popap');
+const addButton = document.querySelector('.add-button');
+const closeButtonImg = document.getElementById('close-button-img');
+
+
+function openPopupForCard () {
+  addCardPopup.classList.add('popup_open');
+  //nameEdit.value = userName.textContent;
+  //profEdit.value = userJob.textContent;
+  console.log('попап с картинками работает');
+}
+addButton.addEventListener('click', openPopupForCard);
+
+function closePopupForCard () {
+  addCardPopup.classList.remove('popup_open');
+}
+closeButtonImg.addEventListener('click', closePopupForCard);
+
+/*function addCard(eve){
+  eve.preventDefault();
+ //userName.textContent = nameEdit.value;
+  //userJob.textContent = profEdit.value;
+ console.log('Карточка добавления картинки');
+  //closePopup ();
+}
+
+editForm.addEventListener('submit', addCard);*/
