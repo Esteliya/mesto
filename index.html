@@ -26,61 +26,21 @@
          </section>
 
          <section aria-label="Фотографии пользователя" class="cards">
-            <article class="card">
-               <img src="./images/karelia.jpg" alt="Карелия. Люди в лодке плывут по реке между отвесных скал." class="card__image">
-               <div class="card__name">
-                  <h2 class="card__title">Карелия</h2>
-                  <button type="button" aria-label="Мне нравится." class="button-like"></button>
-               </div>
-               <button type="button" aria-label="Удалить." class="button-remuve"></button>
-            </article>
 
+          <template id="templite-card">
             <article class="card">
-               <img src="./images/avacha-hill.jpg" alt="Вершина Авачинской сопки между облаков." class="card__image">
-               <div class="card__name">
-                  <h2 class="card__title">Авачинская сопка</h2>
-                  <button type="button" aria-label="Мне нравится." class="button-like"></button>
-               </div>
-               <button type="button" aria-label="Удалить." class="button-remuve"></button>
+              <div id="А" class="card__image"></div>
+                <div id="card__name" class="card__name">
+                <h2 class="card__title"></h2>
+                <button type="button" aria-label="Мне нравится." class="button-like"></button>
+              </div>
+              <button type="button" aria-label="Удалить." class="button-remuve"></button>
             </article>
+          </template>
 
-            <article class="card">
-               <img src="./images/altai.jpg" alt="Изумрудная горная река среди леса и гор." class="card__image">
-               <div class="card__name">
-                  <h2 class="card__title">Алтай</h2>
-                  <button type="button" aria-label="Мне нравится." class="button-like"></button>
-               </div>
-               <button type="button" aria-label="Удалить." class="button-remuve"></button>
-            </article>
-
-            <article class="card">
-               <img src="./images/rizza-lake.jpg" alt="Озеро Рицца на фоне снежных гор." class="card__image">
-               <div class="card__name">
-                  <h2 class="card__title">Озеро Рицца</h2>
-                  <button type="button" aria-label="Мне нравится." class="button-like"></button>
-               </div>
-               <button type="button" aria-label="Удалить." class="button-remuve"></button>
-            </article>
-
-            <article class="card">
-               <img src="./images/ai-petri.jpg" alt="Зубцы вершины Ай-Петри." class="card__image">
-               <div class="card__name">
-                  <h2 class="card__title">Ай-Петри</h2>
-                  <button type="button" aria-label="Мне нравится." class="button-like"></button>
-               </div>
-               <button type="button" aria-label="Удалить." class="button-remuve"></button>
-            </article>
-
-            <article class="card">
-               <img src="./images/mtskheta.jpg" alt="Двухполосная трасса, ведущая к заснеженным вершинам гор." class="card__image">
-               <div class="card__name">
-                  <h2 class="card__title">Мцхета</h2>
-                  <button type="button" aria-label="Мне нравится." class="button-like"></button>
-               </div>
-               <button type="button" aria-label="Удалить." class="button-remuve"></button>
-            </article>
          </section>
       </main>
+
       <footer class="footer">
          <p class="author">&#169; 2020 Mesto Russia</p>
       </footer>
@@ -96,17 +56,29 @@
          </div>
       </div>
 
-      <div class="popup" id="add-popap">
+      <div class="popup" id="add-card">
         <div class="popup__container">
-           <form name="personalia" method="post" class="edit-form">
+           <form name="personalia" method="post" id ="add-form" class="edit-form">
               <h2 class="edit-form__title">Новое место</h2>
               <input type="text" id="name-card" name="name-card" placeholder="Название" required class="edit-form__personalia">
               <input type="text" id="images" name="images" placeholder="Ссылка на картинку" required class="edit-form__personalia">
               <button type="submit" class="save-button">Создать</button>
            </form>
-           <button type="button" aria-label="Закрыть." class="close-button" id="close-button-img"></button>
+           <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>
         </div>
      </div>
+
+     <div class="popup" id="img-popup">
+      <div class="popup__card">
+        <div class="user-photo">
+         <img class="popap-photo" alt="#" src="#">
+         <button type="button" aria-label="Закрыть." class="close-button" id="close-img-card"></button>
+         <h2 class="popap-photo-title">Текст картинки</h2>
+        </div>
+      </div>
+   </div>
+
+
       <script src="./scripts/index.js"></script>
    </body>
 </html>
