@@ -76,6 +76,7 @@ const popupImg = document.querySelector('#img-popup')
 function openPopupImg (name, link) {
   const photo = popupImg.querySelector('.popap-photo');
   photo.src = link;
+  photo.alt = name;
   const title = popupImg.querySelector('.popap-photo-title');
   title.textContent = name;
   popupImg.classList.add('popup_open');
@@ -90,13 +91,6 @@ function closePopupImg () {
 }
 closeImgButton.addEventListener('click', closePopupImg);
 
-
-//заполняем попап с картинкой
-/*function openImageCard () {
-  titleImagePopup.textContent = element.name;
-  photoImagePopup.src = element.link;
-  photoImagePopup.alt = element.name;
-}*/
 let titleImagePopup = document.querySelector('.popap-photo-title');
 let photoImagePopup = document.querySelector('.popap-photo')
 //создаем карточки из коробки
@@ -111,6 +105,7 @@ initialCards.forEach(function (element) {
 // открываем попап карточки
   cardImg.addEventListener('click', () => {
     openPopupImg(element.name,element.link);
+    console.log(element.link);
   });
   // удаляем карточку
   remuveButton.addEventListener('click', function () {
@@ -134,16 +129,23 @@ const addButton = document.querySelector('.add-button');//кнопка доба�
 const closeButtonImg = document.getElementById('close-add-card');//кнопка закрытия карточки
 
 //добавляем новую карточку из попапа
-function createUserCard (eve) {
+function createUserCard (eve, name, link) {
   eve.preventDefault();
   const userCard = templiteCard.cloneNode(true); //создаем новую карточку пользователя
   const userCardTitle = userCard.querySelector('.card__title') //заголовок карточки
-  userCardTitle.textContent = nameCard.value;
+  userCardTitle.textContent = name;
   const userCardImg = userCard.querySelector('.card__image'); //изображение карточки
-  userCardImg.style.backgroundImage=`url(${imagesPopap.value})`;
+  userCardImg.style.backgroundImage=`url(${link})`;
+  linkImage = userCardImg.style.backgroundImage.replace(/[url, (, ), "]/gi, '');//убираем лишние знаки
 // открываем попап карточки
   userCardImg.addEventListener('click', () => {
-    openPopupImg(nameCard.value,imagesPopap.value);
+    openPopupImg(name, link);
+    console.log(`userCardTitle.textContent: ${userCardTitle.textContent}`);//нужный загголовок
+    /*console.log(userCardImg.style.backgroundImage);//выдает нужный адрес, но в url()
+    console.log(`linkImage: ${linkImage}`);//нужная ссылка
+    console.log(link);//нужная ссылка*/
+
+    //replace(/\s/g, '');
   });
 
 // удаляем карточку
@@ -160,7 +162,10 @@ function createUserCard (eve) {
   cards.prepend(userCard);
   closePopupForCard ()
 };
-addForm.addEventListener('submit', createUserCard);
+addForm.addEventListener('submit', (evt) => {
+  createUserCard (evt, nameCard.value, imagesPopap.value);
+});
+
 
 //открываем попап добавления карточки
 function openPopupForCard () {
