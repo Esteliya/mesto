@@ -22,9 +22,12 @@ editButton.addEventListener('click', openPopup);
 //закрываем  попап редактирования профиля
 function closePopup () {
     popup.classList.remove('popup_open');
-
 }
 closeButton.addEventListener('click', closePopup);
+
+
+
+
 
 //пользователь вносит изменения в профиль
 function editProfile(eve){
