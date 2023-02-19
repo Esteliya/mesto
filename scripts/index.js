@@ -2,14 +2,14 @@ const editButton = document.querySelector('.edit-button');
 const closeButton = document.querySelector('.close-button');
 const likeButton = document.querySelectorAll('.button-like');
 
-let popup = document.querySelector('.popup');
-let userName = document.querySelector('.profile__user-firstname');
-let userJob = document.querySelector('.profile__user-profession');
+const popup = document.querySelector('.popup');
+const userName = document.querySelector('.profile__user-firstname');
+const userJob = document.querySelector('.profile__user-profession');
 
-let nameEdit = document.getElementById('firstname');
-let profEdit = document.getElementById('profession');
+const  nameEdit = document.getElementById('firstname');
+const profEdit = document.getElementById('profession');
 
-let editForm = document.querySelector('.edit-form');
+const editForm = document.querySelector('.edit-form');
 
 const addCardPopup = document.getElementById('add-card');//див попапа
 const nameCard = document.getElementById('name-card');//поле заполнения названия карточки
@@ -21,8 +21,8 @@ const closeButtonImg = document.getElementById('close-add-card');//кнопка 
 const cards = document.querySelector('.cards'); //секция с карточками
 const templiteCard = document.querySelector('#templite-card').content; //темплит
 
-let titleImagePopup = document.querySelector('.popap-photo-title');
-let photoImagePopup = document.querySelector('.popap-photo')
+const titleImagePopup = document.querySelector('.popap-photo-title');
+const photoImagePopup = document.querySelector('.popap-photo')
 
 //массив карточек из коробки
 const initialCards = [
