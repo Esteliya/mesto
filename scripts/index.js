@@ -27,29 +27,29 @@ let photoImagePopup = document.querySelector('.popap-photo')
 //массив карточек из коробки
 const initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Ай-Петри',
-    link: 'https://images.unsplash.com/photo-1580192528624-9e7054afb894?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80'
-  },
-  {
     name: 'Карелия',
     link: 'https://images.unsplash.com/photo-1660489121766-55708d62b800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80'
   },
   {
-    name: 'Озеро Рица',
-    link: 'https://images.unsplash.com/photo-1601029723757-37cb45309818?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80'
+    name: 'Салтинский водопад',
+    link: 'https://images.unsplash.com/photo-1665235482670-460c531bdbea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
+    name: 'Камчатка',
+    link: 'https://images.unsplash.com/photo-1634745186518-db2e653372c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+  },
+  {
+    name: 'Алтай',
+    link: 'https://images.unsplash.com/photo-1619417606952-552a15237367?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+  },
+  {
+    name: 'Озеро Рица',
+    link: 'https://images.unsplash.com/photo-1665883185678-ba092ce12f38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
+  },
+  {
+    name: 'Ай-Петри',
+    link: 'https://images.unsplash.com/photo-1630094466385-a9a7b8596ca8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+  },
 ];
 
 //открываем попап редактирования профиля
@@ -76,8 +76,8 @@ function editProfile(eve){
 }
 editForm.addEventListener('submit', editProfile);
 
-function remuveCard () {
-  const cardDelite = document.querySelector('.card').remuve();
+function removeCard () {
+  const cardDelite = document.querySelector('.card').remove();
   console.lod('функция удаления работает');
 }
 
@@ -107,15 +107,15 @@ function createCard(name, link) {
   cardTitle.textContent = name;
   const cardImg = newCard.querySelector('.card__image'); //изображение карточки
   cardImg.style.backgroundImage=`url(${link})`;
-  const remuveButton = newCard.querySelector('.button-remuve');
+  const removeButton = newCard.querySelector('.button-remove');
   const likeButton = newCard.querySelector('.button-like');
 // открываем попап карточки
 cardImg.addEventListener('click', () => {
   openPopupImg(name, link);
 });
 // удаляем карточку
-remuveButton.addEventListener('click', function () {
-  const cardDelite = remuveButton.closest('.card');
+removeButton.addEventListener('click', function () {
+  const cardDelite = removeButton.closest('.card');
   cardDelite.remove();
 });
 //лайкаем карточку
@@ -131,13 +131,13 @@ initialCards.forEach(function (element) {
 })
 
 //карточка из попапа версия 2
-function createUserCard (eve, name, link) {
+function formSubmitHandler (eve, name, link) {
   eve.preventDefault();
   createCard(name, link);
   closePopupForCard ()
 };
 addForm.addEventListener('submit', (evt) => {
-  createUserCard (evt, nameCard.value, imagesPopap.value);
+  formSubmitHandler (evt, nameCard.value, imagesPopap.value);
 });
 
 //открываем попап добавления карточки
