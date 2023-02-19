@@ -11,32 +11,18 @@ let profEdit = document.getElementById('profession');
 
 let editForm = document.querySelector('.edit-form');
 
-//открываем попап редактирования профиля
-function openPopup () {
-    popup.classList.add('popup_open');
-    nameEdit.value = userName.textContent;
-    profEdit.value = userJob.textContent;
-}
-editButton.addEventListener('click', openPopup);
+const addCardPopup = document.getElementById('add-card');//див попапа
+const nameCard = document.getElementById('name-card');//поле заполнения названия карточки
+const imagesPopap = document.getElementById('images');//поле заполнения ссылки img
+const addForm = document.querySelector('#add-form');//форма с инпутами
+const addButton = document.querySelector('.add-button');//кнопка добавления карточки
+const closeButtonImg = document.getElementById('close-add-card');//кнопка закрытия карточки
 
-//закрываем  попап редактирования профиля
-function closePopup () {
-    popup.classList.remove('popup_open');
-}
-closeButton.addEventListener('click', closePopup);
+const cards = document.querySelector('.cards'); //секция с карточками
+const templiteCard = document.querySelector('#templite-card').content; //темплит
 
-
-
-
-
-//пользователь вносит изменения в профиль
-function editProfile(eve){
-    eve.preventDefault();
-    userName.textContent = nameEdit.value;
-    userJob.textContent = profEdit.value;
-    closePopup ();
-}
-editForm.addEventListener('submit', editProfile);
+let titleImagePopup = document.querySelector('.popap-photo-title');
+let photoImagePopup = document.querySelector('.popap-photo')
 
 //массив карточек из коробки
 const initialCards = [
@@ -66,8 +52,29 @@ const initialCards = [
   }
 ];
 
-const cards = document.querySelector('.cards'); //секция с карточками
-const templiteCard = document.querySelector('#templite-card').content; //темплит
+//открываем попап редактирования профиля
+function openPopup () {
+    popup.classList.add('popup_open');
+    nameEdit.value = userName.textContent;
+    profEdit.value = userJob.textContent;
+}
+editButton.addEventListener('click', openPopup);
+
+//закрываем  попап редактирования профиля
+function closePopup () {
+    popup.classList.remove('popup_open');
+
+}
+closeButton.addEventListener('click', closePopup);
+
+//пользователь вносит изменения в профиль
+function editProfile(eve){
+    eve.preventDefault();
+    userName.textContent = nameEdit.value;
+    userJob.textContent = profEdit.value;
+    closePopup ();
+}
+editForm.addEventListener('submit', editProfile);
 
 function remuveCard () {
   const cardDelite = document.querySelector('.card').remuve();
@@ -85,7 +92,6 @@ function openPopupImg (name, link) {
   popupImg.classList.add('popup_open');
 }
 
-
 const closeImgButton = document.querySelector('#close-img-card');
 //закрываем окно с картинкой
 function closePopupImg () {
@@ -94,81 +100,45 @@ function closePopupImg () {
 }
 closeImgButton.addEventListener('click', closePopupImg);
 
-let titleImagePopup = document.querySelector('.popap-photo-title');
-let photoImagePopup = document.querySelector('.popap-photo')
-//создаем карточки из коробки
-initialCards.forEach(function (element) {
+// шаблоная функция создания карточки
+function createCard(name, link) {
   const newCard = templiteCard.cloneNode(true);
   const cardTitle = newCard.querySelector('.card__title') //заголовок карточки
-  cardTitle.textContent = element.name;
+  cardTitle.textContent = name;
   const cardImg = newCard.querySelector('.card__image'); //изображение карточки
-  cardImg.style.backgroundImage=`url(${element.link})`;
+  cardImg.style.backgroundImage=`url(${link})`;
   const remuveButton = newCard.querySelector('.button-remuve');
   const likeButton = newCard.querySelector('.button-like');
 // открываем попап карточки
-  cardImg.addEventListener('click', () => {
-    openPopupImg(element.name,element.link);
-    console.log(element.link);
-  });
-  // удаляем карточку
-  remuveButton.addEventListener('click', function () {
-    const cardDelite = remuveButton.closest('.card');
-    cardDelite.remove();
-  });
-  //лайкаем карточку
-  likeButton.addEventListener('click', function () {
-    likeButton.classList.toggle('button-like_activ');
-  });
-  cards.append(newCard);
+cardImg.addEventListener('click', () => {
+  openPopupImg(name, link);
 });
-editForm.addEventListener('submit', editProfile);
+// удаляем карточку
+remuveButton.addEventListener('click', function () {
+  const cardDelite = remuveButton.closest('.card');
+  cardDelite.remove();
+});
+//лайкаем карточку
+likeButton.addEventListener('click', function () {
+  likeButton.classList.toggle('button-like_activ');
+});
+cards.prepend(newCard);
+}
 
+// создаем карточку из коробки
+initialCards.forEach(function (element) {
+  createCard(element.name, element.link)
+})
 
-const addCardPopup = document.getElementById('add-card');//див попапа
-const nameCard = document.getElementById('name-card');//поле заполнения названия карточки
-const imagesPopap = document.getElementById('images');//поле заполнения ссылки img
-const addForm = document.querySelector('#add-form');//форма с инпутами
-const addButton = document.querySelector('.add-button');//кнопка добавления карточки
-const closeButtonImg = document.getElementById('close-add-card');//кнопка закрытия карточки
-
-//добавляем новую карточку из попапа
+//карточка из попапа версия 2
 function createUserCard (eve, name, link) {
   eve.preventDefault();
-  const userCard = templiteCard.cloneNode(true); //создаем новую карточку пользователя
-  const userCardTitle = userCard.querySelector('.card__title') //заголовок карточки
-  userCardTitle.textContent = name;
-  const userCardImg = userCard.querySelector('.card__image'); //изображение карточки
-  userCardImg.style.backgroundImage=`url(${link})`;
-  linkImage = userCardImg.style.backgroundImage.replace(/[url, (, ), "]/gi, '');//убираем лишние знаки
-// открываем попап карточки
-  userCardImg.addEventListener('click', () => {
-    openPopupImg(name, link);
-    console.log(`userCardTitle.textContent: ${userCardTitle.textContent}`);//нужный загголовок
-    /*console.log(userCardImg.style.backgroundImage);//выдает нужный адрес, но в url()
-    console.log(`linkImage: ${linkImage}`);//нужная ссылка
-    console.log(link);//нужная ссылка*/
-
-    //replace(/\s/g, '');
-  });
-
-// удаляем карточку
-  const remuveButton = userCard.querySelector('.button-remuve');
-    remuveButton.addEventListener('click', function () {
-    const cardDelite = remuveButton.closest('.card');
-    cardDelite.remove();
-  });
-  //лайкаем карточку
-  const likeButton = userCard.querySelector('.button-like');
-  likeButton.addEventListener('click', function () {
-    likeButton.classList.toggle('button-like_activ');
-  });
-  cards.prepend(userCard);
+  createCard(name, link);
   closePopupForCard ()
 };
 addForm.addEventListener('submit', (evt) => {
   createUserCard (evt, nameCard.value, imagesPopap.value);
 });
-
 
 //открываем попап добавления карточки
 function openPopupForCard () {

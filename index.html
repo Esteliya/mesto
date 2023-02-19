@@ -24,23 +24,19 @@
             </div>
             <button type="button" aria-label="Добавить фотографию." class="add-button"></button>
          </section>
-
          <section aria-label="Фотографии пользователя" class="cards">
-
-          <template id="templite-card">
-            <article class="card">
-              <div id="А" class="card__image"></div>
-                <div id="card__name" class="card__name">
-                <h2 class="card__title"></h2>
-                <button type="button" aria-label="Мне нравится." class="button-like"></button>
-              </div>
-              <button type="button" aria-label="Удалить." class="button-remuve"></button>
-            </article>
-          </template>
-
+            <template id="templite-card">
+               <article class="card">
+                  <div id="А" class="card__image"></div>
+                  <div id="card__name" class="card__name">
+                     <h2 class="card__title"></h2>
+                     <button type="button" aria-label="Мне нравится." class="button-like"></button>
+                  </div>
+                  <button type="button" aria-label="Удалить." class="button-remuve"></button>
+               </article>
+            </template>
          </section>
       </main>
-
       <footer class="footer">
          <p class="author">&#169; 2020 Mesto Russia</p>
       </footer>
@@ -55,30 +51,26 @@
             <button type="button" aria-label="Закрыть." class="close-button"></button>
          </div>
       </div>
-
       <div class="popup" id="add-card">
-        <div class="popup__container">
-           <form name="personalia" method="post" id ="add-form" class="edit-form">
-              <h2 class="edit-form__title">Новое место</h2>
-              <input type="text" id="name-card" name="name-card" placeholder="Название" required class="edit-form__personalia">
-              <input type="text" id="images" name="images" placeholder="Ссылка на картинку" required class="edit-form__personalia">
-              <button type="submit" class="save-button">Создать</button>
-           </form>
-           <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>
-        </div>
-     </div>
-
-     <div class="popup" id="img-popup">
-      <div class="popup__card">
-        <div class="user-photo">
-         <img class="popap-photo" alt="#" src="#">
-         <button type="button" aria-label="Закрыть." class="close-button" id="close-img-card"></button>
-         <h2 class="popap-photo-title">Текст картинки</h2>
-        </div>
+         <div class="popup__container">
+            <form name="personalia" method="post" id ="add-form" class="edit-form">
+               <h2 class="edit-form__title">Новое место</h2>
+               <input type="text" id="name-card" name="name-card" placeholder="Название" required class="edit-form__personalia">
+               <input type="text" id="images" name="images" placeholder="Ссылка на картинку" required class="edit-form__personalia">
+               <button type="submit" class="save-button">Создать</button>
+            </form>
+            <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>
+         </div>
       </div>
-   </div>
-
-
+      <div class="popup" id="img-popup">
+         <div class="popup__card">
+            <div class="user-photo">
+               <img class="popap-photo" alt="#" src="#">
+               <button type="button" aria-label="Закрыть." class="close-button" id="close-img-card"></button>
+               <h2 class="popap-photo-title">Текст картинки</h2>
+            </div>
+         </div>
+      </div>
       <script src="./scripts/index.js"></script>
    </body>
 </html>
