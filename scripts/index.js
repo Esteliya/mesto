@@ -15,20 +15,18 @@ const templiteCard = document.querySelector('#templite-card').content; //тем�
 const titleTempliteCard = document.querySelector('.card__title');//заголовок темплита
 const imageTempliteCard = document.querySelector('.card__image');//картинка теплита
 
-//ПОПАПЫ vvv под вопросом
-const popup = document.querySelector('.popup');//общий класс попапов
-const editForm = document.querySelector('.edit-form');//форма заполнения попапа (общая)
-
+//ПОПАПЫ
 //попап редактирования профиля
 const profilePopup = document.querySelector('.profile-popup');//див попапа редактирования профиля
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
 const profEdit = document.getElementById('profession');//инпут профессия
+const editForm = document.querySelector('.edit-form-profile');//форма заполнения попапа
 
 //попап добавления карточки
 const addCardPopup = document.querySelector('.add-card-popup');//див попапа добавления карточки
 const inputNameAddCardPopup = document.getElementById('name-card');//поле заполнения названия карточки
 const inputLinkAddCardPopup = document.getElementById('images');//поле заполнения ссылки img
-const formAddCardPopup = document.querySelector('#add-form');//форма с инпутами
+const formAddCardPopup = document.querySelector('.edit-form-add-card');//форма с инпутами
 
 //попап увеличения фотографии
 const popapImageZoom = document.querySelector('.zoom-img-popap');//див попапа увеличения фотографии
@@ -73,7 +71,7 @@ function openPopup (element) {
   element.classList.add('popup_open');
 }
 //обработчик закрытия формы
-function closePopup111 (element) {
+function closePopup (element) {
   element.classList.remove('popup_open');
 }
 // шаблоная функция создания карточки
@@ -98,7 +96,8 @@ removeButton.addEventListener('click', function () {
 likeButton.addEventListener('click', function () {
   likeButton.classList.toggle('button-like_activ');
 });
-cards.prepend(newCard);
+return newCard;
+//cards.prepend(newCard);
 }
 //РЕДАКТИРОВАНИЕ
 //пользователь вносит изменения в профиль
@@ -125,10 +124,10 @@ function handlerOpeningFormPopupProfile () {
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
 // открываем картинку из карточки
 function handlerOpeningPopapImageZoom (name, link) {
-  const photo = popapImageZoom.querySelector('.popap-photo');
+  const photo = photoPopupImageZoom;
   photo.src = link;
   photo.alt = name;
-  const title = popapImageZoom.querySelector('.popap-photo-title');
+  const title = titlePopupImageZoom;
   title.textContent = name;
   popapImageZoom.classList.add('popup_open');
 }
@@ -142,7 +141,7 @@ addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 //ЗАКРЫТИЕ ПОПАПОВ
 //закрываем попап редактирования профиля
 function handlerClosingFormPopupProfile () {
-  closePopup111 (document.querySelector('.profile-popup'))
+  closePopup (document.querySelector('.profile-popup'))
 }
 closeButton.addEventListener('click', handlerClosingFormPopupProfile);
 //закрываем попап добавления карточки
@@ -160,13 +159,15 @@ closeImgButton.addEventListener('click', handlerClosingPopapImageZoom);
 //СОЗДАНИЕ КАРТОЧЕК
 // создаем карточку из коробки
 initialCards.forEach(function (element) {
-  createCard(element.name, element.link)
-})
+  const newCard = createCard(element.name, element.link)
+  cards.append(newCard);
+});
 //создаем карточку из попапа
 function handlerCreateCardFromPopupAddCard (eve, name, link) {
   eve.preventDefault();
-  createCard(name, link);
+  const newCard = createCard(name, link);
   handlerClosingFormPopupAddCard ()
+  cards.prepend(newCard);
 };
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
