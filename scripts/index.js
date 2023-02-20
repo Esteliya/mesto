@@ -1,6 +1,6 @@
 //КНОПКИ
 const editButton = document.querySelector('.edit-button');//кнопка редактирования профиля
-const closeButton = document.querySelector('.close-button');//кнопка закрытия попапа
+const closeButtons = document.querySelectorAll('.close-button');//кнопки закрытия попапов
 const likeButton = document.querySelectorAll('.button-like');//кнопка лайка
 const addButton = document.querySelector('.add-button');//кнопка добавления карточки
 
@@ -16,6 +16,7 @@ const titleTempliteCard = document.querySelector('.card__title');//заголо�
 const imageTempliteCard = document.querySelector('.card__image');//картинка теплита
 
 //ПОПАПЫ
+const popup = document.querySelector('.popup');//общий класс всех попапов
 //попап редактирования профиля
 const profilePopup = document.querySelector('.profile-popup');//див попапа редактирования профиля
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
@@ -32,10 +33,6 @@ const formAddCardPopup = document.querySelector('.edit-form-add-card');//фор�
 const popapImageZoom = document.querySelector('.zoom-img-popap');//див попапа увеличения фотографии
 const titlePopupImageZoom = document.querySelector('.popap-photo-title');//попап: заголовок картинки
 const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: увеличенное изображение (картинка)
-
-//УДАЛИТЬ vvv
-const closeImgButton = document.querySelector('#close-img-card'); //кнопка закрытия попапа увеличенного изображения
-const closeButtonImg = document.getElementById('close-add-card');//кнопка закрытия карточки
 
 //массив карточек из коробки
 const initialCards = [
@@ -139,23 +136,11 @@ function handlerOpeningFormPopupAddCard () {
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 
 //ЗАКРЫТИЕ ПОПАПОВ
-//закрываем попап редактирования профиля
-function handlerClosingFormPopupProfile () {
-  closePopup (document.querySelector('.profile-popup'))
-}
-closeButton.addEventListener('click', handlerClosingFormPopupProfile);
-//закрываем попап добавления карточки
-function handlerClosingFormPopupAddCard () {
-  addCardPopup.classList.remove('popup_open');
-}
-closeButtonImg.addEventListener('click', handlerClosingFormPopupAddCard);
-
-//закрываем окно с картинкой
-function handlerClosingPopapImageZoom () {
-  popapImageZoom.classList.remove('popup_open');
-}
-closeImgButton.addEventListener('click', handlerClosingPopapImageZoom);
-
+//универсальный обработчик закрытия попапов
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');// находим ближайший к кнопке попап
+  button.addEventListener('click', () => closePopup(popup)); // устанавливаем обработчик закрытия на кнопку
+});
 //СОЗДАНИЕ КАРТОЧЕК
 // создаем карточку из коробки
 initialCards.forEach(function (element) {
