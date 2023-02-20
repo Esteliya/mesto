@@ -94,8 +94,8 @@ likeButton.addEventListener('click', function () {
   likeButton.classList.toggle('button-like_activ');
 });
 return newCard;
-//cards.prepend(newCard);
 }
+
 //РЕДАКТИРОВАНИЕ
 //пользователь вносит изменения в профиль
 function editProfile(eve){
@@ -141,6 +141,19 @@ closeButtons.forEach((button) => {
   const popup = button.closest('.popup');// находим ближайший к кнопке попап
   button.addEventListener('click', () => closePopup(popup)); // устанавливаем обработчик закрытия на кнопку
 });
+//закрываем попап редактирования профиля
+function handlerClosingFormPopupProfile () {
+  closePopup (document.querySelector('.profile-popup'))
+}
+//закрываем попап добавления карточки
+function handlerClosingFormPopupAddCard () {
+  addCardPopup.classList.remove('popup_open');
+}
+//закрываем окно с картинкой
+function handlerClosingPopapImageZoom () {
+  popapImageZoom.classList.remove('popup_open');
+}
+
 //СОЗДАНИЕ КАРТОЧЕК
 // создаем карточку из коробки
 initialCards.forEach(function (element) {
