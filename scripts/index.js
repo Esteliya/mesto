@@ -114,7 +114,7 @@ const cardDelite = document.querySelector('.card').remove();
 //ОТКРЫВАЕМ ПОПАПЫ
 //открываем попап редактирования профиля
 function handlerOpeningFormPopupProfile () {
-  openPopup (document.querySelector('.profile-popup'))
+  openPopup (profilePopup)
     nameEdit.value = userName.textContent;
     profEdit.value = userJob.textContent;
 }
@@ -126,11 +126,11 @@ function handlerOpeningPopapImageZoom (name, link) {
   photo.alt = name;
   const title = titlePopupImageZoom;
   title.textContent = name;
-  popapImageZoom.classList.add('popup_open');
+  openPopup (popapImageZoom);
 }
 //открываем попап добавления карточки
 function handlerOpeningFormPopupAddCard () {
-  addCardPopup.classList.add('popup_open');
+  openPopup (addCardPopup);
   formAddCardPopup.reset();
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
@@ -143,15 +143,15 @@ closeButtons.forEach((button) => {
 });
 //закрываем попап редактирования профиля
 function handlerClosingFormPopupProfile () {
-  closePopup (document.querySelector('.profile-popup'))
+  closePopup (profilePopup)
 }
 //закрываем попап добавления карточки
 function handlerClosingFormPopupAddCard () {
-  addCardPopup.classList.remove('popup_open');
+  closePopup (addCardPopup);
 }
 //закрываем окно с картинкой
 function handlerClosingPopapImageZoom () {
-  popapImageZoom.classList.remove('popup_open');
+  closePopup (popapImageZoom);
 }
 
 //СОЗДАНИЕ КАРТОЧЕК
