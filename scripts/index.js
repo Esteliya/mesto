@@ -16,7 +16,7 @@ const titleTempliteCard = document.querySelector('.card__title');//заголо�
 const imageTempliteCard = document.querySelector('.card__image');//картинка теплита
 
 //ПОПАПЫ
-const popup = document.querySelector('.popup');//общий класс всех попапов
+//const popup = document.querySelector('.popup');//общий класс всех попапов
 //попап редактирования профиля
 const profilePopup = document.querySelector('.profile-popup');//див попапа редактирования профиля
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
@@ -93,6 +93,7 @@ removeButton.addEventListener('click', function () {
 likeButton.addEventListener('click', function () {
   likeButton.classList.toggle('button-like_activ');
 });
+
 return newCard;
 }
 
@@ -153,6 +154,26 @@ function handlerClosingFormPopupAddCard () {
 function handlerClosingPopapImageZoom () {
   closePopup (popapImageZoom);
 }
+//закрытие попапа по клику на оверлей!!
+/*const closePopupOnClickOverlay = (event) => {
+    if (event.target === event.currentTarget) {
+    closePopup (popup);
+  }
+};
+popup.addEventListener('click', closePopupOnClickOverlay);*/
+
+
+const popup = document.querySelectorAll('.popup');//общий класс всех попапов
+popup.forEach((popups) => {
+  const popup = popups.closest('.popup');
+  const closePopupOnClickOverlay = (event) => {
+    if (event.target === event.currentTarget) {
+    closePopup (popup);
+  }
+};
+popup.addEventListener('click', closePopupOnClickOverlay);
+});
+
 
 //СОЗДАНИЕ КАРТОЧЕК
 // создаем карточку из коробки
