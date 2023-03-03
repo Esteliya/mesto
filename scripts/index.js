@@ -77,6 +77,12 @@ function openPopup (element) {
 //обработчик закрытия формы
 function closePopup (element) {
   element.classList.remove('popup_open');
+  //удаляем обработчик кнопки Esc
+  window.removeEventListener('keydown', (e) => {
+    if (e.key === "Escape") {
+      closePopup (element);
+    }
+  });
 }
 
 // шаблоная функция создания карточки
@@ -101,7 +107,6 @@ removeButton.addEventListener('click', function () {
 likeButton.addEventListener('click', function () {
   likeButton.classList.toggle('button-like_activ');
 });
-
 return newCard;
 }
 
@@ -126,6 +131,12 @@ function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
     nameEdit.value = userName.textContent;
     profEdit.value = userJob.textContent;
+    inputElements = editForm.querySelectorAll('.edit-form__personalia');
+    inputElements.forEach((inputElement) => {
+      hideInputError(editForm, inputElement);
+      const buttonElement = editForm.querySelector('.save-button');
+      deleteDisabledButton (buttonElement);
+    })
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
 // открываем картинку из карточки
@@ -135,12 +146,18 @@ function handlerOpeningPopapImageZoom (name, link) {
   photo.alt = name;
   const title = titlePopupImageZoom;
   title.textContent = name;
-  openPopup (popapImageZoom);
+  openPopup(popapImageZoom);
 }
 //открываем попап добавления карточки
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
-  openPopup (addCardPopup);
+  //inputElement = formAddCardPopup.querySelector('.edit-form__personalia');
+  //hideInputError(formAddCardPopup, inputElement);
+  openPopup(addCardPopup);
+  inputElements = formAddCardPopup.querySelectorAll('.edit-form__personalia');
+    inputElements.forEach((inputElement) => {
+      hideInputError(formAddCardPopup, inputElement);
+    })
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 
@@ -173,28 +190,6 @@ popup.forEach((popups) => {
 };
 popup.addEventListener('click', closePopupOnClickOverlay);
 });
-
-
-
-/*
-window.addEventListener('keydown', function (event) {
-  console.log(`Вы нажали на кнопку: ${event.key}`)
-})
-*/
-
-
-/*buttonElement.onclick = function() {
-  closePopup (popup);
-}
-
-function keyPressEscape (evt) {
-  if (evt.key === "27") {
-    console.log('жмем на кнопку Esc')
-  }
-}
-popup.addEventListener('keydowne')*/
-
-
 
 //СОЗДАНИЕ КАРТОЧЕК
 // создаем карточку из коробки

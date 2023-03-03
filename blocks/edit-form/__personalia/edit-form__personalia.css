@@ -16,16 +16,7 @@
 .edit-form__personalia:last-child {
   color: blueviolet;
 }
-/*
-.edit-form__personalia:invalid {
-  border-bottom-color: red;
-}
 
-
-.edit-form__personalia:valid {
-  border-bottom-color: green;
-}
-*/
 
 .form__input_type_error {
   border-bottom-color: red;
@@ -38,6 +29,7 @@ font-style: normal;
 font-weight: 400;
 font-size: 12px;
 line-height: 125%;
+min-height: 30px;
 color: #FF0000;
 margin-top: -30px;
 }
@@ -45,11 +37,3 @@ margin-top: -30px;
 .edit-form__personalia-error_active {
   display: block;
 }
-/*
-.firstname-error {
-  display: none;
-}
-.profession-error {
-  display: none;
-}
-*/

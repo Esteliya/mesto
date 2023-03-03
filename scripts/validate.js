@@ -82,9 +82,24 @@ const hasInvalidInput = (inputList) => {
 //блокируем кнопку Сохранить/Создать
 const toggleButtonState = (inputList, buttonElement) => {
   if(hasInvalidInput(inputList)) {
-   buttonElement.classList.add('save-button-disabled');
+   //buttonElement.disabled = 'true';
+   //buttonElement.classList.add('save-button-disabled');
+   disabledButton (buttonElement);
   } else {
-    buttonElement.classList.remove('save-button-disabled');
+    //buttonElement.disabled = '';
+    //buttonElement.classList.remove('save-button-disabled');
+    deleteDisabledButton (buttonElement);
 }
 }
+
+const disabledButton = (buttonElement) => {
+  buttonElement.disabled = 'true';
+  buttonElement.classList.add('save-button-disabled');
+}
+
+const deleteDisabledButton = (buttonElement) => {
+  buttonElement.disabled = '';
+  buttonElement.classList.remove('save-button-disabled');
+}
+
 enableValidation();
