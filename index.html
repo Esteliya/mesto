@@ -17,7 +17,7 @@
                <div class="profile__data">
                   <div class="profile__user-name">
                      <h1 class="profile__user-firstname">Жак-Ив Кусто</h1>
-                     <button type="button" aria-label="Редактировать профиль." class="edit-button"></button>
+                     <button type="button" aria-label="Редактировать профиль." class="edit-button "></button>
                   </div>
                   <p class="profile__user-profession">Исследователь океана</p>
                </div>
@@ -27,8 +27,8 @@
          <section aria-label="Фотографии пользователя" class="cards">
             <template id="templite-card">
                <article class="card">
-                  <div id="А" class="card__image"></div>
-                  <div id="card__name" class="card__name">
+                  <div class="card__image"></div>
+                  <div class="card__name">
                      <h2 class="card__title"></h2>
                      <button type="button" aria-label="Мне нравится." class="button-like"></button>
                   </div>
@@ -62,11 +62,11 @@
             <form name="personalia" method="post" id ="add-form" class="edit-form edit-form-add-card">
                <h2 class="edit-form__title">Новое место</h2>
                <label>
-               <input type="text" required minlength="2" maxlength="30" id="name-card" name="name-card" placeholder="Название" required class="edit-form__personalia">
+               <input type="text" required novalidate minlength="2" maxlength="30" id="name-card" name="name-card" placeholder="Название" required class="edit-form__personalia">
                <span class="name-card-error edit-form__personalia-error"></span>
               </label>
               <label>
-               <input type="url" required id="images" name="images" placeholder="Ссылка на картинку" required class="edit-form__personalia">
+               <input type="url" required novalidate id="images" name="images" placeholder="Ссылка на картинку" required class="edit-form__personalia">
                <span class="images-error edit-form__personalia-error"></span>
               </label>
                <button type="submit" class="save-button">Создать</button>

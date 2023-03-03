@@ -62,15 +62,23 @@ const initialCards = [
   },
 ];
 
+
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 //обработчик открытия формы
 function openPopup (element) {
   element.classList.add('popup_open');
+  //закрываем попап по нажатию на Esc
+  window.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") {
+      closePopup (element);
+    }
+  });
 }
 //обработчик закрытия формы
 function closePopup (element) {
   element.classList.remove('popup_open');
 }
+
 // шаблоная функция создания карточки
 function createCard(name, link) {
   const newCard = templiteCard.cloneNode(true);
@@ -131,8 +139,8 @@ function handlerOpeningPopapImageZoom (name, link) {
 }
 //открываем попап добавления карточки
 function handlerOpeningFormPopupAddCard () {
-  openPopup (addCardPopup);
   formAddCardPopup.reset();
+  openPopup (addCardPopup);
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 
@@ -155,14 +163,6 @@ function handlerClosingPopapImageZoom () {
   closePopup (popapImageZoom);
 }
 //закрытие попапа по клику на оверлей!!
-/*const closePopupOnClickOverlay = (event) => {
-    if (event.target === event.currentTarget) {
-    closePopup (popup);
-  }
-};
-popup.addEventListener('click', closePopupOnClickOverlay);*/
-
-
 const popup = document.querySelectorAll('.popup');//общий класс всех попапов
 popup.forEach((popups) => {
   const popup = popups.closest('.popup');
@@ -173,6 +173,27 @@ popup.forEach((popups) => {
 };
 popup.addEventListener('click', closePopupOnClickOverlay);
 });
+
+
+
+/*
+window.addEventListener('keydown', function (event) {
+  console.log(`Вы нажали на кнопку: ${event.key}`)
+})
+*/
+
+
+/*buttonElement.onclick = function() {
+  closePopup (popup);
+}
+
+function keyPressEscape (evt) {
+  if (evt.key === "27") {
+    console.log('жмем на кнопку Esc')
+  }
+}
+popup.addEventListener('keydowne')*/
+
 
 
 //СОЗДАНИЕ КАРТОЧЕК

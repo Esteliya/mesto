@@ -23,15 +23,14 @@ const formInput = formElement.querySelector('.edit-form__personalia');
 const formError = formElement.querySelector(`.${formInput.id}-error`);
 
 
-//показать ошибку
+//показаем ошибку (добавляем класс)
 const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add('form__input_type_error');
   errorElement.textContent = errorMessage;
   errorElement.classList.add('edit-form__personalia-error_active');
 };
-//скрыть ошибку
-// Функция, которая удаляет класс с ошибкой
+//скрываем ошибку (удаляем класс)
 const hideInputError = (formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove('form__input_type_error');
@@ -39,77 +38,53 @@ const hideInputError = (formElement, inputElement) => {
   errorElement.textContent = '';
 };
 
-// Функция, которая проверяет валидность поля
-const isValid = (formElement, inputElement) => {
+// Проверяем валидность полей
+const checkInputValidity = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
-    // Если поле не проходит валидацию, покажем ошибку
+    // Поле не проходит валидацию - показываем ошибку
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
-    // Если проходит, скроем
+    // Поле проходит валидацию - скрываем ошибку
     hideInputError(formElement, inputElement);
   }
 };
 
+//валидация полей ввода
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.edit-form__personalia'));
+  const buttonElement = formElement.querySelector('.save-button');
+  toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
-      isValid(formElement, inputElement);
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
     });
   });
 };
 
+//запускаем валидацию форм
 const enableValidation = () => {
   const formList = Array.from(document.querySelectorAll('.edit-form'));
   formList.forEach((formElement) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
   });
-
     setEventListeners(formElement);
 });
 };
-enableValidation();
-/*
-formElement.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
 
-// Вызовем функцию isValid на каждый ввод символа
-formInput.addEventListener('input', function () {
-  isValid();
-});
-*/
-
-
-
-
-/*
-console.log(`id: ${formInput.id}`); // "email-input"
-const formError = formElement.querySelector(`.${formInput.id}-error`);
-console.log(`.${formInput.id}-error`);
-
-// Функция, которая добавляет класс с ошибкой
-const showInputError = (element) => {
-  element.classList.add('edit-form__personalia-error');
-  formError.classList.add('edit-form__personalia-error_active');
-};
-
-// Функция, которая удаляет класс с ошибкой
-const hideInputError = (element) => {
-  element.classList.remove('edit-form__personalia-error');
-  formError.classList.remove('edit-form__personalia-error_active');
-};
-// Функция, которая проверяет валидность поля
-const isValid = () => {
-  if (!formInput.validity.valid) {
-    // Если поле не проходит валидацию, покажем ошибку
-    showInputError(formInput);
+//проверяем поля на валидность
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+   return !inputElement.validity.valid;
+ });
+}
+//блокируем кнопку Сохранить/Создать
+const toggleButtonState = (inputList, buttonElement) => {
+  if(hasInvalidInput(inputList)) {
+   buttonElement.classList.add('save-button-disabled');
   } else {
-    // Если проходит, скроем
-    hideInputError(formInput);
-  }
-};
-// Вызовем функцию isValid на каждый ввод символа
-formInput.addEventListener('input', isValid);
-*/
+    buttonElement.classList.remove('save-button-disabled');
+}
+}
+enableValidation();
