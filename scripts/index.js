@@ -16,7 +16,6 @@ const titleTempliteCard = document.querySelector('.card__title');//заголо�
 const imageTempliteCard = document.querySelector('.card__image');//картинка теплита
 
 //ПОПАПЫ
-//const popup = document.querySelector('.popup');//общий класс всех попапов
 //попап редактирования профиля
 const profilePopup = document.querySelector('.profile-popup');//див попапа редактирования профиля
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
@@ -122,8 +121,6 @@ function handlerOpeningPopapImageZoom (name, link) {
 //открываем попап добавления карточки
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
-  //inputElement = formAddCardPopup.querySelector('.edit-form__personalia');
-  //hideInputError(formAddCardPopup, inputElement);
   openPopup(addCardPopup);
   inputElements = formAddCardPopup.querySelectorAll('.edit-form__personalia');
     inputElements.forEach((inputElement) => {
@@ -150,7 +147,7 @@ function handlerClosingFormPopupAddCard () {
 function handlerClosingPopapImageZoom () {
   closePopup (popapImageZoom);
 }
-//закрытие попапа по клику на оверлей!!
+//закрытие попапа по клику на оверлей
 const popup = document.querySelectorAll('.popup');//общий класс всех попапов
 popup.forEach((popups) => {
   const popup = popups.closest('.popup');
