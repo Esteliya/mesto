@@ -1,4 +1,3 @@
-
 //массив карточек из коробки
 const initialCards = [
   {
@@ -27,3 +26,11 @@ const initialCards = [
   },
 ];
 
+const selectors = {
+  formSelector: '.edit-form',
+  inputSelector: '.edit-form__personalia',
+  buttonSelector: '.save-button',
+  disabledButtonSelector: 'save-button-disabled',
+  inputErrorSelector: 'input-error',
+  spanErrorSelector: 'edit-form__personalia-error_active',
+  }

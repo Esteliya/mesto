@@ -104,9 +104,9 @@ function handlerOpeningFormPopupProfile () {
     profEdit.value = userJob.textContent;
     inputElements = editForm.querySelectorAll('.edit-form__personalia');
     inputElements.forEach((inputElement) => {
-      hideInputError(editForm, inputElement);
+      hideInputError(selectors, editForm, inputElement);
       const buttonElement = editForm.querySelector('.save-button');
-      deleteDisabledButton (buttonElement);
+      deleteDisabledButton (selectors, buttonElement);
     })
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
@@ -127,7 +127,7 @@ function handlerOpeningFormPopupAddCard () {
   openPopup(addCardPopup);
   inputElements = formAddCardPopup.querySelectorAll('.edit-form__personalia');
     inputElements.forEach((inputElement) => {
-      hideInputError(formAddCardPopup, inputElement);
+      hideInputError(selectors, formAddCardPopup, inputElement);
     })
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);

@@ -44,14 +44,10 @@
          <div class="popup__container">
             <form name="personalia" novalidate method="post" class="edit-form edit-form-profile">
                <h2 class="edit-form__title">Редактировать профиль</h2>
-               <label>
                <input type="text" id="firstname" required minlength="2" maxlength="40" name="firstname" placeholder="Имя" required class="edit-form__personalia">
                <span class="firstname-error edit-form__personalia-error"></span>
-              </label>
-              <label>
                <input type="text" id="profession" required minlength="2" maxlength="200" name="profession" placeholder="О себе" required class="edit-form__personalia">
                <span class="profession-error edit-form__personalia-error"></span>
-              </label>
                <button type="submit" class="save-button">Сохранить</button>
             </form>
             <button type="button" aria-label="Закрыть." class="close-button"></button>
@@ -61,14 +57,10 @@
          <div class="popup__container">
             <form name="personalia" novalidate  method="post" id ="add-form" class="edit-form edit-form-add-card">
                <h2 class="edit-form__title">Новое место</h2>
-               <label>
                <input type="text" required minlength="2" maxlength="30" id="name-card" name="name-card" placeholder="Название" required class="edit-form__personalia">
                <span class="name-card-error edit-form__personalia-error"></span>
-              </label>
-              <label>
                <input type="url" required id="images" name="images" placeholder="Ссылка на картинку" required class="edit-form__personalia">
                <span class="images-error edit-form__personalia-error"></span>
-              </label>
                <button type="submit" class="save-button">Создать</button>
             </form>
             <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>

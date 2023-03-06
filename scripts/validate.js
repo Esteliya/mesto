@@ -1,75 +1,53 @@
-//alert('привет мир!');
-//РАБОТАЕТ!
-/*
-
-novalidate - атрибут формы в html
-
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
-
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});
-*/
-
-const formElement = document.querySelector('.edit-form');//форма
-const formInput = formElement.querySelector('.edit-form__personalia');
-// Выбираем элемент ошибки на основе уникального класса
-const formError = formElement.querySelector(`.${formInput.id}-error`);
-
+const formElement = document.querySelector(selectors.formSelector);//форма
+const formInput = formElement.querySelector(selectors.inputSelector);//инпут
 
 //показаем ошибку (добавляем класс)
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('form__input_type_error');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('edit-form__personalia-error_active');
+const showInputError = (selectors, formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);//поиск через id элемента
+  inputElement.classList.add(selectors.inputErrorSelector);//добавили красное подчеркивание
+  errorElement.textContent = inputElement.validationMessage;//текст ошибки - стандартная валидация
+  errorElement.classList.add(selectors.spanErrorSelector);//показываем ошибку
 };
 //скрываем ошибку (удаляем класс)
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (selectors, formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('form__input_type_error');
-  errorElement.classList.remove('edit-form__personalia-error_active');
+  inputElement.classList.remove(selectors.inputErrorSelector);//убираем подчеркивание
+  errorElement.classList.remove(selectors.spanErrorSelector);//скрываем блок с ошибкой
   errorElement.textContent = '';
 };
 
 // Проверяем валидность полей
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (selectors,formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     // Поле не проходит валидацию - показываем ошибку
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(selectors, formElement, inputElement);
   } else {
     // Поле проходит валидацию - скрываем ошибку
-    hideInputError(formElement, inputElement);
+    hideInputError(selectors, formElement, inputElement);
   }
 };
 
 //валидация полей ввода
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.edit-form__personalia'));
-  const buttonElement = formElement.querySelector('.save-button');
+const setEventListeners = (selectors, formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));//все инпуты в массив
+  const buttonElement = formElement.querySelector(selectors.buttonSelector);
   toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
+      checkInputValidity(selectors, formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
     });
   });
 };
 
 //запускаем валидацию форм
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.edit-form'));
+const enableValidation = (selectors) => {
+  const formList = Array.from(document.querySelectorAll(selectors.formSelector));
   formList.forEach((formElement) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
   });
-    setEventListeners(formElement);
+    setEventListeners(selectors, formElement);
 });
 };
 
@@ -79,27 +57,23 @@ const hasInvalidInput = (inputList) => {
    return !inputElement.validity.valid;
  });
 }
-//блокируем кнопку Сохранить/Создать
+//блокируем/разблокируем кнопку Сохранить/Создать после проверки на валидность инпутов
 const toggleButtonState = (inputList, buttonElement) => {
   if(hasInvalidInput(inputList)) {
-   //buttonElement.disabled = 'true';
-   //buttonElement.classList.add('save-button-disabled');
-   disabledButton (buttonElement);
+   disabledButton (selectors, buttonElement);
   } else {
-    //buttonElement.disabled = '';
-    //buttonElement.classList.remove('save-button-disabled');
-    deleteDisabledButton (buttonElement);
+    deleteDisabledButton (selectors, buttonElement);
 }
 }
-
-const disabledButton = (buttonElement) => {
+//копка не работает
+const disabledButton = (selectors, buttonElement) => {
   buttonElement.disabled = 'true';
-  buttonElement.classList.add('save-button-disabled');
+  buttonElement.classList.add(selectors.disabledButtonSelector);
 }
-
-const deleteDisabledButton = (buttonElement) => {
+//кнопка работает
+const deleteDisabledButton = (selectors, buttonElement) => {
   buttonElement.disabled = '';
-  buttonElement.classList.remove('save-button-disabled');
+  buttonElement.classList.remove(selectors.disabledButtonSelector);
 }
 
-enableValidation();
+enableValidation(selectors);
