@@ -1,6 +1,3 @@
-const formElement = document.querySelector(selectors.formSelector);//форма
-const formInput = formElement.querySelector(selectors.inputSelector);//инпут
-
 //показаем ошибку (добавляем класс)
 const showInputError = (selectors, formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);//поиск через id элемента
@@ -75,5 +72,14 @@ const deleteDisabledButton = (selectors, buttonElement) => {
   buttonElement.disabled = '';
   buttonElement.classList.remove(selectors.disabledButtonSelector);
 }
+
+//очищаем форму от ошибок
+const removeValidationErrors = (selectors, formElement) => {
+  inputElements = formElement.querySelectorAll(selectors.inputSelector);
+  inputElements.forEach((inputElement) => {
+    hideInputError(selectors, formElement, inputElement);
+    enableValidation (selectors);
+    });
+  };
 
 enableValidation(selectors);

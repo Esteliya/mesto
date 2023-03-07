@@ -21,6 +21,8 @@ const profilePopup = document.querySelector('.profile-popup');//див попа�
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
 const profEdit = document.getElementById('profession');//инпут профессия
 const editForm = document.querySelector('.edit-form-profile');//форма заполнения попапа
+//кнопки
+const buttonElement = editForm.querySelector('.save-button');//кнопка сохранить
 
 //попап добавления карточки
 const addCardPopup = document.querySelector('.add-card-popup');//див попапа добавления карточки
@@ -34,11 +36,12 @@ const titlePopupImageZoom = document.querySelector('.popap-photo-title');//по�
 const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: увеличенное изображение (картинка)
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
+
 //обработчик открытия формы
 function openPopup (element) {
   element.classList.add('popup_open');
   //закрываем попап по нажатию на Esc
-  window.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', closesEscepe = (e) => {
     if (e.key === "Escape") {
       closePopup (element);
     }
@@ -48,7 +51,7 @@ function openPopup (element) {
 function closePopup (element) {
   element.classList.remove('popup_open');
   //удаляем обработчик кнопки Esc
-  window.removeEventListener('keydown', (e) => {
+  document.removeEventListener('keydown', closesEscepe = (e) => {
     if (e.key === "Escape") {
       closePopup (element);
     }
@@ -99,14 +102,10 @@ const cardDelite = document.querySelector('.card').remove();
 //открываем попап редактирования профиля
 function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
-    nameEdit.value = userName.textContent;
-    profEdit.value = userJob.textContent;
-    inputElements = editForm.querySelectorAll('.edit-form__personalia');
-    inputElements.forEach((inputElement) => {
-      hideInputError(selectors, editForm, inputElement);
-      const buttonElement = editForm.querySelector('.save-button');
-      deleteDisabledButton (selectors, buttonElement);
-    })
+  nameEdit.value = userName.textContent;
+  profEdit.value = userJob.textContent;
+  enableValidation (selectors);
+  removeValidationErrors (selectors, editForm);
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
 // открываем картинку из карточки
@@ -122,10 +121,8 @@ function handlerOpeningPopapImageZoom (name, link) {
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
   openPopup(addCardPopup);
-  inputElements = formAddCardPopup.querySelectorAll('.edit-form__personalia');
-    inputElements.forEach((inputElement) => {
-      hideInputError(selectors, formAddCardPopup, inputElement);
-    })
+  enableValidation (selectors);
+  removeValidationErrors (selectors, formAddCardPopup);
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 
