@@ -37,25 +37,25 @@ const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: 
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 
+//функция закрытия попапа по нажатию кнопки Esc
+const closesEscepe = (e) => {
+  if (e.key === "Escape") {
+    const element = document.querySelector('.popup_open');
+    closePopup (element);
+  }
+}
+
 //обработчик открытия формы
 function openPopup (element) {
   element.classList.add('popup_open');
   //закрываем попап по нажатию на Esc
-  document.addEventListener('keydown', closesEscepe = (e) => {
-    if (e.key === "Escape") {
-      closePopup (element);
-    }
-  });
+  document.addEventListener('keydown', closesEscepe);
 }
 //обработчик закрытия формы
 function closePopup (element) {
   element.classList.remove('popup_open');
   //удаляем обработчик кнопки Esc
-  document.removeEventListener('keydown', closesEscepe = (e) => {
-    if (e.key === "Escape") {
-      closePopup (element);
-    }
-  });
+  document.removeEventListener('keydown', closesEscepe);
 }
 
 // шаблоная функция создания карточки
@@ -104,7 +104,7 @@ function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
   nameEdit.value = userName.textContent;
   profEdit.value = userJob.textContent;
-  enableValidation (selectors);
+  //enableValidation (selectors);
   removeValidationErrors (selectors, editForm);
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
@@ -121,7 +121,7 @@ function handlerOpeningPopapImageZoom (name, link) {
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
   openPopup(addCardPopup);
-  enableValidation (selectors);
+  //enableValidation (selectors);
   removeValidationErrors (selectors, formAddCardPopup);
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
@@ -172,3 +172,5 @@ function handlerCreateCardFromPopupAddCard (eve, name, link) {
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
 });
+
+enableValidation (selectors);
