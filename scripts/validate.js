@@ -78,8 +78,8 @@ const removeValidationErrors = (selectors, formElement) => {
   inputElements = formElement.querySelectorAll(selectors.inputSelector);
   inputElements.forEach((inputElement) => {
     hideInputError(selectors, formElement, inputElement);
-    enableValidation (selectors);
     });
+
   };
 
-//enableValidation(selectors);
+enableValidation(selectors);

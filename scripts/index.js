@@ -104,7 +104,6 @@ function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
   nameEdit.value = userName.textContent;
   profEdit.value = userJob.textContent;
-  //enableValidation (selectors);
   removeValidationErrors (selectors, editForm);
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
@@ -121,7 +120,6 @@ function handlerOpeningPopapImageZoom (name, link) {
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
   openPopup(addCardPopup);
-  //enableValidation (selectors);
   removeValidationErrors (selectors, formAddCardPopup);
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
@@ -172,5 +170,3 @@ function handlerCreateCardFromPopupAddCard (eve, name, link) {
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
 });
-
-enableValidation (selectors);
