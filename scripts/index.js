@@ -21,8 +21,6 @@ const profilePopup = document.querySelector('.profile-popup');//див попа�
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
 const profEdit = document.getElementById('profession');//инпут профессия
 const editForm = document.querySelector('.edit-form-profile');//форма заполнения попапа
-//кнопки
-const buttonElement = editForm.querySelector('.save-button');//кнопка сохранить
 
 //попап добавления карточки
 const addCardPopup = document.querySelector('.add-card-popup');//див попапа добавления карточки
@@ -34,6 +32,9 @@ const formAddCardPopup = document.querySelector('.edit-form-add-card');//фор�
 const popapImageZoom = document.querySelector('.zoom-img-popap');//див попапа увеличения фотографии
 const titlePopupImageZoom = document.querySelector('.popap-photo-title');//попап: заголовок картинки
 const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: увеличенное изображение (картинка)
+
+//кнопки попапов
+const saveButtonImg = formAddCardPopup.querySelector('.save-button');//кнопка Сохранить в попапе добавления картинки
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 
@@ -166,6 +167,8 @@ function handlerCreateCardFromPopupAddCard (eve, name, link) {
   const newCard = createCard(name, link);
   handlerClosingFormPopupAddCard ()
   cards.prepend(newCard);
+  disabledButton (selectors, saveButtonImg);
+
 };
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
