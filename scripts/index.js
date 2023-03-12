@@ -35,6 +35,7 @@ const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: 
 
 //кнопки попапов
 const saveButtonImg = formAddCardPopup.querySelector('.save-button');//кнопка Сохранить в попапе добавления картинки
+const saveButtonProfile = editForm.querySelector('.save-button');//кнопка Сохранить в попапе редактирования профиля
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 
@@ -134,6 +135,7 @@ closeButtons.forEach((button) => {
 //закрываем попап редактирования профиля
 function handlerClosingFormPopupProfile () {
   closePopup (profilePopup)
+  disabledButton (selectors, saveButtonProfile);
 }
 //закрываем попап добавления карточки
 function handlerClosingFormPopupAddCard () {
@@ -168,7 +170,6 @@ function handlerCreateCardFromPopupAddCard (eve, name, link) {
   handlerClosingFormPopupAddCard ()
   cards.prepend(newCard);
   disabledButton (selectors, saveButtonImg);
-
 };
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
