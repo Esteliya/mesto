@@ -50,9 +50,6 @@ const closesEscepe = (e) => {
 //обработчик открытия формы
 function openPopup (element) {
   element.classList.add('popup_open');
-  //дизейбл кнопки
-  buttonElement = element.querySelector('.save-button');
-  disabledButton (selectors, buttonElement);
   //закрываем попап по нажатию на Esc
   document.addEventListener('keydown', closesEscepe);
 }
@@ -138,6 +135,7 @@ closeButtons.forEach((button) => {
 //закрываем попап редактирования профиля
 function handlerClosingFormPopupProfile () {
   closePopup (profilePopup)
+  disabledButton (selectors, saveButtonProfile);
 }
 //закрываем попап добавления карточки
 function handlerClosingFormPopupAddCard () {
@@ -171,6 +169,7 @@ function handlerCreateCardFromPopupAddCard (eve, name, link) {
   const newCard = createCard(name, link);
   handlerClosingFormPopupAddCard ()
   cards.prepend(newCard);
+  disabledButton (selectors, saveButtonImg);
 };
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
