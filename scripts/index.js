@@ -1,3 +1,4 @@
+
 //КНОПКИ
 const editButton = document.querySelector('.edit-button');//кнопка редактирования профиля
 const closeButtons = document.querySelectorAll('.close-button');//кнопки закрытия попапов
@@ -60,6 +61,7 @@ function closePopup (element) {
   document.removeEventListener('keydown', closesEscepe);
 }
 
+/*
 // шаблоная функция создания карточки
 function createCard(name, link) {
   const newCard = templiteCard.cloneNode(true);
@@ -84,6 +86,7 @@ likeButton.addEventListener('click', function () {
 });
 return newCard;
 }
+*/
 
 //РЕДАКТИРОВАНИЕ
 //пользователь вносит изменения в профиль
@@ -95,11 +98,14 @@ function editProfile(eve){
 }
 editForm.addEventListener('submit', editProfile);
 
+/*
 //УДАЛЕНИЕ КАРТОЧЕК
 //функция удаления карточки
 function removeCard () {
 const cardDelite = document.querySelector('.card').remove();
 }
+*/
+
 //ОТКРЫВАЕМ ПОПАПЫ
 //открываем попап редактирования профиля
 function handlerOpeningFormPopupProfile () {
@@ -157,12 +163,14 @@ popup.forEach((popups) => {
 popup.addEventListener('click', closePopupOnClickOverlay);
 });
 
+/*
 //СОЗДАНИЕ КАРТОЧЕК
 // создаем карточку из коробки
 initialCards.forEach(function (element) {
   const newCard = createCard(element.name, element.link)
   cards.append(newCard);
 });
+
 //создаем карточку из попапа
 function handlerCreateCardFromPopupAddCard (eve, name, link) {
   eve.preventDefault();
@@ -174,3 +182,4 @@ function handlerCreateCardFromPopupAddCard (eve, name, link) {
 formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
 });
+*/
