@@ -27,10 +27,10 @@ const initialCards = [
 ];
 
 const selectors = {
-  formSelector: '.edit-form',
-  inputSelector: '.edit-form__personalia',
-  buttonSelector: '.save-button',
-  disabledButtonSelector: 'save-button-disabled',
-  inputErrorSelector: 'input-error',
-  spanErrorSelector: 'edit-form__personalia-error_active',
+  formSelector: '.edit-form',//форма
+  inputSelector: '.edit-form__personalia',//инпут в форме
+  buttonSelector: '.save-button',//кнопка сохранения
+  disabledButtonSelector: 'save-button-disabled',//неактивная кнопка
+  inputErrorSelector: 'input-error',//нижнее подчеркивание инпута
+  spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки
   }

@@ -1,10 +1,11 @@
+/*
 //показаем ошибку (добавляем класс)
 const showInputError = (selectors, formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);//поиск через id элемента
   inputElement.classList.add(selectors.inputErrorSelector);//добавили красное подчеркивание
   errorElement.textContent = inputElement.validationMessage;//текст ошибки - стандартная валидация
   errorElement.classList.add(selectors.spanErrorSelector);//показываем ошибку
-};
+};  
 //скрываем ошибку (удаляем класс)
 const hideInputError = (selectors, formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -83,3 +84,4 @@ const removeValidationErrors = (selectors, formElement) => {
   };
 
 enableValidation(selectors);
+*/

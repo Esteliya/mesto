@@ -112,7 +112,7 @@ function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
   nameEdit.value = userName.textContent;
   profEdit.value = userJob.textContent;
-  removeValidationErrors (selectors, editForm);
+  //removeValidationErrors (selectors, editForm);
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
 // открываем картинку из карточки
@@ -128,7 +128,7 @@ function handlerOpeningPopapImageZoom (name, link) {
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
   openPopup(addCardPopup);
-  removeValidationErrors (selectors, formAddCardPopup);
+  //removeValidationErrors (selectors, formAddCardPopup);
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 
@@ -141,7 +141,7 @@ closeButtons.forEach((button) => {
 //закрываем попап редактирования профиля
 function handlerClosingFormPopupProfile () {
   closePopup (profilePopup)
-  disabledButton (selectors, saveButtonProfile);
+  //disabledButton (selectors, saveButtonProfile);
 }
 //закрываем попап добавления карточки
 function handlerClosingFormPopupAddCard () {

@@ -5,7 +5,7 @@ class Card {
     this._name = data.name;//имя
     this._link = data.link;//картинка
     this._templateSelector = templateSelector;//темплит
-    console.log(data);
+    //console.log(data);
   }
 
   _getTemplate() {
@@ -49,7 +49,7 @@ class Card {
   }
   //удаление карточки
   _handleDeleteButton() {
-    console.log(this._element);
+    //console.log(this._element);
     this._element.remove();
   }
   /*
@@ -88,6 +88,6 @@ formAddCardPopup.addEventListener('submit', (e) => {
   handlerClosingFormPopupAddCard ()
   // Добавляем в DOM
   document.querySelector('.cards').prepend(cardElement);//вставляем карточки на страницу (начало)
-  disabledButton (selectors, saveButtonImg);
+  //disabledButton (selectors, saveButtonImg);
 });
 

@@ -33,8 +33,3 @@
         padding: 14px 82px;
     }
 }
-.save-button-disabled {
-  background-color: #F5F5F5;
-  color: rgba(0, 0, 0, 0.2);
-}
-

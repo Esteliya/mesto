@@ -33,6 +33,7 @@
 @import url(../blocks/edit-form/__personalia-error/edit-form__personalia-error.css);
 @import url(../blocks/edit-form/__personalia-error/edit-form__personalia-error_active.css);
 @import url(../blocks/save-button/save-button.css);
+@import url(../blocks/save-button-disabled/save-button-disabled.css);
 @import url(../blocks/close-button/close-button.css);
 @import url(../blocks/popap-photo/popap-photo.css);
 @import url(../blocks/user-photo/user-photo.css);

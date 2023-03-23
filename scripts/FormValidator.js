@@ -1,74 +1,103 @@
 class FormValidator {
-    constructor(popupSelector) {
-      this.popupSelector = popupSelector;//попап
-      this.form = form;//форма
-      this.button = button;///кнопка
-      //this._input = input;//инпут
-      //this._span = span;//строка ошибки
-      //console.log(data);
-    }
-    _getForm() {
-      const popupElement = document//создали элемент
-        .querySelector(this._popupSelector)//нашли попап
-        .content//извлекаем содержимое
-        .querySelector('.edit-form')//в содержимом нашли форму
+  constructor(data, validatorFormElement) {
+  //принимаем на вход селекторы объекта валидации
+  //this._formSelector = data.formSelector,//форма
+  this._inputSelector = data.inputSelector,//инпут
+  this._inputs = Array.from(this._validatorFormElement.querySelectorAll(this._inputSelector));//массив инпутов
+  this._buttonSelector =this._validatorFormElement.querySelector('.save-button'),//кнопка сохранить
+  this._disabledButtonSelecto = data.disabledButtonSelector,//неактивная кнопка
+  this._inputErrorSelector = data.inputErrorSelector,//невалидность инпута
+  this._spanErrorSelector = data.spanErrorSelector,//активная строка ошибки
+  this._validatorFormElement = validatorFormElement//получаемая форма
+}
 
-      return popupElement;//возвращаем элемент
-    }
-    setValidForm() {//проверяем валидность
-      this._form = this._getForm();
-      //this.enableValidation();
-      this._inputs = Array.from(this._form.querySelectorAll('.edit-form__personalia'));
-      this.button = this._form.querySelector('.save-button');
+//показаем ошибку (добавляем класс)
+_showInputError (inputElement) {
+  const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`);//поиск через id элемента
+  inputElement.classList.add(this._inputError);//добавили красное подчеркивание
+  errorElement.textContent = inputElement.validationMessage;//текст ошибки - стандартная валидация
+  errorElement.classList.add(this._spanErrorSelector);//показываем ошибку
+};
+//скрываем ошибку (удаляем класс)
+_hideInputError (inputElement) {
+  const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(this._inputError);//убираем подчеркивание
+  errorElement.classList.remove(this._spanErrorSelector);//скрываем блок с ошибкой
+  errorElement.textContent = '';
+};
 
-
-      return this._form;
-    }
-
-    enableValidation(){
-      this._inputs.forEach((inputElement) => {
-        inputElement.addEventListener('input', function () {
-          console.log('функция работает')
-          //checkInputValidity(selectors, formElement, inputElement);
-          //toggleButtonState(inputList, buttonElement);
-        });
-      });
-    }
-
+// Проверяем валидность полей
+_checkInputValidity (inputElement) {
+  if (!inputElement.validity.valid) {
+    // Поле не проходит валидацию - показываем ошибку
+    _showInputError(inputElement);
+  } else {
+    // Поле проходит валидацию - скрываем ошибку
+    _hideInputError(inputElement);
   }
+};
+//валидация полей ввода
+_setEventListeners () {
+  //this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));//все инпуты в массив
+  //const buttonElement = this._formSelector.querySelector(this._buttonSelector);
+  _toggleButtonState();
+  this._inputs.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      _checkInputValidity(inputElement);
+      _toggleButtonState();
+    });
+  });
+};
+//блокируем/разблокируем кнопку Сохранить/Создать после проверки на валидность инпутов
+_toggleButtonState () {
+  if(_hasInvalidInput(inputList)) {
+   _disabledButton ();
+  } else {
+    _deleteDisabledButton ();
+}
+}
+//проверяем поля на валидность
+_hasInvalidInput (inputList) {
+  return inputList.some((inputElement) => {
+   return !inputElement.validity.valid;
+ });
+}
+//копка не работает
+_disabledButton () {
+  this._buttonSelector.disabled = 'true';
+  this._buttonSelector.classList.add(this._disabledButtonSelector);
+}
+//кнопка работает
+_deleteDisabledButton () {
+  this._buttonSelector.disabled = '';
+  this._buttonSelector.classList.remove(this._disabledButtonSelector);
+}
+//очищаем форму от ошибок
+_removeValidationErrors () {
+  const inputElements = this._formSelector.querySelectorAll(this._inputSelector);
+  inputElements.forEach(() => {
+    _hideInputError();
+    });
+  };
+}
 
-  const validProfile = new FormValidator('.profile-popup');//валидация попапа профиля
-
+  //запускаем валидацию форм
+enableValidation () {
 /*
-    _getFormValidator() {
-      const formValidator = document//создали элемент
-        .querySelector(this._formSelector)//нашли форму
-        .content//извлекаем его содержимое
-        .querySelector('.edit-form__personali')//в содержимом нашли input
-        //.querySelector(`.${this._input}-error`)
-        .cloneNode(true);//клонирование
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+  });
+  */
+    _setEventListeners();
+}
 
-      return formValidator;//возвращаем клонированный элемент
-    }
+//формы попапов
+const formEditProfile = editForm.querySelector('.edit-form-profile');//форма редактирования профиля
+const formAddCard = formAddCardPopup.querySelector('.edit-form-add-card');//форма создания карточки
 
-    hasInvalidInput (this._input) {
-      return this._input.some((inputElement) => {
-       return !inputElement.validity.valid;
-     });
-    }
-*/
-/*
-form - edit-form
-imput - edit-form__personalia
-span - ошибка - edit-form__personalia-error
-кнопка - save-button
-
-const selectors = {
-  formSelector: '.edit-form',
-  inputSelector: '.edit-form__personalia',
-  buttonSelector: '.save-button',
-  disabledButtonSelector: 'save-button-disabled',
-  inputErrorSelector: 'input-error',
-  spanErrorSelector: 'edit-form__personalia-error_active',
-  }
-*/
+//валидация формы редактирования профиля
+const validatorEditProfile = new Card(selectors, formEditProfile);
+validatorEditProfile.enableValidation();
+//валидация формы создания карточки
+const validatorformAddCard = new Card(selectors, formAddCard);
+validatorEditProfile.enableValidation();
