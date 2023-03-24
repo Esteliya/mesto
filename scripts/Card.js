@@ -65,29 +65,5 @@ class Card {
 */
 }
 
-//перебираем массив
-initialCards.forEach((item) => {
-  //получаем дефолтные карточки из массива
-  const defoultCard = new Card(item, '#templite-card');
-  const cardElement = defoultCard.generateCard();
-
-  // Добавляем в DOM
-  document.querySelector('.cards').append(cardElement);//вставляем карточки на страницу
-});
-
-
-//проверка данных инпута
-formAddCardPopup.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const userData = {
-    name: inputNameAddCardPopup.value,
-    link: inputLinkAddCardPopup.value,
-  }
-  const userCard = new Card(userData, '#templite-card');
-  const cardElement = userCard.generateCard();
-  handlerClosingFormPopupAddCard ()
-  // Добавляем в DOM
-  document.querySelector('.cards').prepend(cardElement);//вставляем карточки на страницу (начало)
-  //disabledButton (selectors, saveButtonImg);
-});
-
+//export default Card;
+export { Card };

@@ -38,6 +38,11 @@ const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: 
 const saveButtonImg = formAddCardPopup.querySelector('.save-button');//кнопка Сохранить в попапе добавления картинки
 const saveButtonProfile = editForm.querySelector('.save-button');//кнопка Сохранить в попапе редактирования профиля
 
+//ИМПОРТ
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
+
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 
 //функция закрытия попапа по нажатию кнопки Esc
@@ -183,3 +188,38 @@ formAddCardPopup.addEventListener('submit', (evt) => {
   handlerCreateCardFromPopupAddCard (evt, inputNameAddCardPopup.value, inputLinkAddCardPopup.value);
 });
 */
+
+//перебираем массив
+initialCards.forEach((item) => {
+  //получаем дефолтные карточки из массива
+  const defoultCard = new Card(item, '#templite-card');
+  const cardElement = defoultCard.generateCard();
+
+  // Добавляем в DOM
+  document.querySelector('.cards').append(cardElement);//вставляем карточки на страницу
+});
+
+//СОЗДАЕМ КАРТОЧКИ
+//проверка данных инпута
+formAddCardPopup.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const userData = {
+    name: inputNameAddCardPopup.value,
+    link: inputLinkAddCardPopup.value,
+  }
+  const userCard = new Card(userData, '#templite-card');
+  const cardElement = userCard.generateCard();
+  handlerClosingFormPopupAddCard ()
+  // Добавляем в DOM
+  document.querySelector('.cards').prepend(cardElement);//вставляем карточки на страницу (начало)
+  //disabledButton (selectors, saveButtonImg);
+});
+
+//ВАЛИДАЦИЯ
+//валидация формы редактирования профиля
+const validatorEditProfile = new FormValidator(selectors, editForm);
+validatorEditProfile.enableValidation();
+
+//валидация формы создания карточки
+const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
+validatorformAddCard.enableValidation();
