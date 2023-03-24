@@ -35,7 +35,7 @@ _checkInputValidity = (inputElement) => {
 };
 
 //копка не работает
-_disabledButton = (data) => {
+disabledButton = (data) => {
   this._button.disabled = 'true';
   this._button.classList.add(data.disabledButtonSelector);
 }
@@ -56,7 +56,7 @@ _hasInvalidInput = (inputList) => {
 //блокируем/разблокируем кнопку Сохранить/Создать после проверки на валидность инпутов
 _toggleButtonState = (inputList) => {
   if(this._hasInvalidInput(inputList)) {
-   this._disabledButton (this._data);
+   this.disabledButton (this._data);
   } else {
     this._deleteDisabledButton (this._data);
 }
@@ -66,18 +66,15 @@ _toggleButtonState = (inputList) => {
 _setEventListeners = (inputList) => {
   this._toggleButtonState(inputList);
   this._inputs.forEach((inputElement) => {
-    inputElement.addEventListener('input', function () {
-      console.log("работает?");
-      console.log(inputElement);
+    inputElement.addEventListener('input', () => {
       this._checkInputValidity(inputElement);
-      console.log("точно работает?");
-      this._toggleButtonState();
+      this._toggleButtonState(inputList);
     });
   });
 };
 
 //очищаем форму от ошибок
-_removeValidationErrors = () => {
+removeValidationErrors = () => {
   this._inputs.forEach((inputElement) => {
     this._hideInputError(inputElement);
     });

@@ -1,5 +1,5 @@
+import { handlerOpeningPopapImageZoom } from "./index.js";
 //КЛАССЫ и ООП
-
 class Card {
   constructor(data, templateSelector) {
     this._name = data.name;//имя

@@ -2,7 +2,7 @@
 //КНОПКИ
 const editButton = document.querySelector('.edit-button');//кнопка редактирования профиля
 const closeButtons = document.querySelectorAll('.close-button');//кнопки закрытия попапов
-const likeButton = document.querySelectorAll('.button-like');//кнопка лайка
+//const likeButton = document.querySelectorAll('.button-like');//кнопка лайка
 const addButton = document.querySelector('.add-button');//кнопка добавления карточки
 
 //СЕКЦИИ И БЛОКИ НА СТРАНИЦЕ
@@ -12,9 +12,9 @@ const userJob = document.querySelector('.profile__user-profession');//строк
 //блоки на страницы
 const cards = document.querySelector('.cards'); //секция с карточками
 //темплит
-const templiteCard = document.querySelector('#templite-card').content; //темплит
-const titleTempliteCard = document.querySelector('.card__title');//заголовок темплита
-const imageTempliteCard = document.querySelector('.card__image');//картинка теплита
+//const templiteCard = document.querySelector('#templite-card').content; //темплит
+//const titleTempliteCard = document.querySelector('.card__title');//заголовок темплита
+//const imageTempliteCard = document.querySelector('.card__image');//картинка теплита
 
 //ПОПАПЫ
 //попап редактирования профиля
@@ -35,8 +35,8 @@ const titlePopupImageZoom = document.querySelector('.popap-photo-title');//по�
 const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: увеличенное изображение (картинка)
 
 //кнопки попапов
-const saveButtonImg = formAddCardPopup.querySelector('.save-button');//кнопка Сохранить в попапе добавления картинки
-const saveButtonProfile = editForm.querySelector('.save-button');//кнопка Сохранить в попапе редактирования профиля
+//const saveButtonImg = formAddCardPopup.querySelector('.save-button');//кнопка Сохранить в попапе добавления картинки
+//const saveButtonProfile = editForm.querySelector('.save-button');//кнопка Сохранить в попапе редактирования профиля
 
 //ИМПОРТ
 import { Card } from "./Card.js";
@@ -118,6 +118,7 @@ function handlerOpeningFormPopupProfile () {
   nameEdit.value = userName.textContent;
   profEdit.value = userJob.textContent;
   //removeValidationErrors (selectors, editForm);
+  validatorEditProfile.removeValidationErrors();
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
 // открываем картинку из карточки
@@ -134,6 +135,7 @@ function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
   openPopup(addCardPopup);
   //removeValidationErrors (selectors, formAddCardPopup);
+  validatorformAddCard.removeValidationErrors();
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 
@@ -147,15 +149,19 @@ closeButtons.forEach((button) => {
 function handlerClosingFormPopupProfile () {
   closePopup (profilePopup)
   //disabledButton (selectors, saveButtonProfile);
+  validatorEditProfile.disabledButton(selectors);
 }
 //закрываем попап добавления карточки
 function handlerClosingFormPopupAddCard () {
   closePopup (addCardPopup);
+  validatorformAddCard.disabledButton(selectors);
 }
+/*
 //закрываем окно с картинкой
 function handlerClosingPopapImageZoom () {
   closePopup (popapImageZoom);
 }
+*/
 //закрытие попапа по клику на оверлей
 const popup = document.querySelectorAll('.popup');//общий класс всех попапов
 popup.forEach((popups) => {
@@ -210,6 +216,7 @@ formAddCardPopup.addEventListener('submit', (e) => {
   const userCard = new Card(userData, '#templite-card');
   const cardElement = userCard.generateCard();
   handlerClosingFormPopupAddCard ()
+
   // Добавляем в DOM
   document.querySelector('.cards').prepend(cardElement);//вставляем карточки на страницу (начало)
   //disabledButton (selectors, saveButtonImg);
@@ -223,3 +230,5 @@ validatorEditProfile.enableValidation();
 //валидация формы создания карточки
 const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
 validatorformAddCard.enableValidation();
+
+export { handlerOpeningPopapImageZoom };
