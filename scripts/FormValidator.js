@@ -4,7 +4,7 @@ class FormValidator {
   //принимаем на вход селекторы объекта валидации
   this._data = data,//объект с селекторами (форма, инпут, проч. настройки)
   this._inputs = Array.from(this._formElement.querySelectorAll(this._data.inputSelector));//массив инпутов
-  this._button = this._formElement.buttonSelector;//кнопка сохранить
+  this._button = this._formElement.querySelector(this._data.buttonSelector);//кнопка сохранить
 };
 
 //показаем ошибку (добавляем класс)
@@ -56,14 +56,14 @@ _hasInvalidInput = (inputList) => {
 //блокируем/разблокируем кнопку Сохранить/Создать после проверки на валидность инпутов
 _toggleButtonState = (inputList) => {
   if(this._hasInvalidInput(inputList)) {
-   this._disabledButton (data);
+   this._disabledButton (this._data);
   } else {
-    this._deleteDisabledButton (data);
+    this._deleteDisabledButton (this._data);
 }
 }
 
 //валидация полей ввода
-_setEventListeners = () => {
+_setEventListeners = (inputList) => {
   this._toggleButtonState(inputList);
   this._inputs.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
@@ -81,12 +81,12 @@ _removeValidationErrors = () => {
   }
   //запускаем валидацию форм
 enableValidation = () => {
-/*
-  formElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  this._inputs.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    this._setEventListeners(this._inputs);
   });
-  */
-   this._setEventListeners();
 }
 }
 //export default FormValidator;

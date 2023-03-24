@@ -34,3 +34,5 @@ const selectors = {
   inputErrorSelector: 'input-error',//нижнее подчеркивание инпута
   spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки
   }
+
+ // export { initialCards, selectors };
