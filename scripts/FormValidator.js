@@ -89,5 +89,6 @@ enableValidation = () => {
   });
 }
 }
-//export default FormValidator;
+
+//ЭКСПОРТ
 export { FormValidator };

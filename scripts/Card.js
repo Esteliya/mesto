@@ -1,4 +1,6 @@
+//ИМПОРТ
 import { handlerOpeningPopapImageZoom } from "./index.js";
+
 //КЛАССЫ и ООП
 class Card {
   constructor(data, templateSelector) {
@@ -52,18 +54,8 @@ class Card {
     //console.log(this._element);
     this._element.remove();
   }
-  /*
-  //открытие попапа зум-картинки
-  _handleOpeningZoomPopup(name, link) {
-    const photo = photoPopupImageZoom;
-    photo.src = link;
-    photo.alt = name;
-    const title = titlePopupImageZoom;
-    title.textContent = name;
-  openPopup(popapImageZoom);
-  }
-*/
+
 }
 
-//export default Card;
+//ЭКСПОРТ
 export { Card };
