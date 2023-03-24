@@ -41,7 +41,7 @@ const saveButtonProfile = editForm.querySelector('.save-button');//кнопка 
 //ИМПОРТ
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
-//import { initialCards, selectors } from "./customize.js";
+import { initialCards, selectors } from "./customize.js";
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 

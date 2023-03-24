@@ -67,7 +67,10 @@ _setEventListeners = (inputList) => {
   this._toggleButtonState(inputList);
   this._inputs.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
+      console.log("работает?");
+      console.log(inputElement);
       this._checkInputValidity(inputElement);
+      console.log("точно работает?");
       this._toggleButtonState();
     });
   });

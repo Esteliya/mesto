@@ -35,4 +35,4 @@ const selectors = {
   spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки
   }
 
- // export { initialCards, selectors };
+ export { initialCards, selectors };
