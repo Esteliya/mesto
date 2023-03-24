@@ -1,10 +1,10 @@
 class FormValidator {
   constructor(data, formElement) {
-  this._formElement = formElement,//получаемая форма
+  this._formElement = formElement;//получаемая форма
   //принимаем на вход селекторы объекта валидации
   this._data = data,//объект с селекторами (форма, инпут, проч. настройки)
   this._inputs = Array.from(this._formElement.querySelectorAll(this._data.inputSelector));//массив инпутов
-  this._button =this._validatorFormElement.querySelector('.save-button')//кнопка сохранить
+  this._button = this._formElement.buttonSelector;//кнопка сохранить
 };
 
 //показаем ошибку (добавляем класс)
@@ -35,13 +35,13 @@ _checkInputValidity = (inputElement) => {
 };
 
 //копка не работает
-_disabledButton = () => {
+_disabledButton = (data) => {
   this._button.disabled = 'true';
   this._button.classList.add(data.disabledButtonSelector);
 }
 
 //кнопка работает
-_deleteDisabledButton = () => {
+_deleteDisabledButton = (data) => {
   this._button.disabled = '';
   this._button.classList.remove(data.disabledButtonSelector);
 }
@@ -54,17 +54,17 @@ _hasInvalidInput = (inputList) => {
 }
 
 //блокируем/разблокируем кнопку Сохранить/Создать после проверки на валидность инпутов
-_toggleButtonState = () => {
-  if(this._hasInvalidInput(this._inputs)) {
-   this._disabledButton ();
+_toggleButtonState = (inputList) => {
+  if(this._hasInvalidInput(inputList)) {
+   this._disabledButton (data);
   } else {
-    this._deleteDisabledButton ();
+    this._deleteDisabledButton (data);
 }
 }
 
 //валидация полей ввода
 _setEventListeners = () => {
-  this._toggleButtonState();
+  this._toggleButtonState(inputList);
   this._inputs.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       this._checkInputValidity(inputElement);
@@ -78,7 +78,7 @@ _removeValidationErrors = () => {
   this._inputs.forEach((inputElement) => {
     this._hideInputError(inputElement);
     });
-
+  }
   //запускаем валидацию форм
 enableValidation = () => {
 /*
@@ -86,8 +86,7 @@ enableValidation = () => {
     evt.preventDefault();
   });
   */
-   _setEventListeners();
-}
+   this._setEventListeners();
 }
 }
 //export default FormValidator;
