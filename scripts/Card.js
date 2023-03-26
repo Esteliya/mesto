@@ -7,7 +7,6 @@ class Card {
     this._name = data.name;//имя
     this._link = data.link;//картинка
     this._templateSelector = templateSelector;//темплит
-    //console.log(data);
   }
 
   _getTemplate() {
@@ -22,9 +21,11 @@ class Card {
 
   generateCard() {//вставляем данные из массива
     this._element = this._getTemplate();
+    this._like = this._element.querySelector('.button-like');
+    this._image = this._element.querySelector('.card__image');
     this._setEventListeners();
 
-    this._element.querySelector('.card__image').style.backgroundImage = `url(${this._link})`;
+    this._image.style.backgroundImage = `url(${this._link})`;
     this._element.querySelector('.card__title').textContent = this._name;
 
     return this._element;
@@ -33,7 +34,7 @@ class Card {
   //обработчик слушателей
   _setEventListeners() {
     //слушатель кнопки лайка
-    this._element.querySelector('.button-like').addEventListener('click', () => {
+    this._like.addEventListener('click', () => {
       this._handleLikeButton();
     });
     //слушатель кнопки удаления
@@ -41,18 +42,18 @@ class Card {
       this._handleDeleteButton();
     });
     //слушаетль карточки - увеличение картинки
-    this._element.querySelector('.card__image').addEventListener('click', () => {
+    this._image.addEventListener('click', () => {
       handlerOpeningPopapImageZoom(this._name, this._link);
     });
   }
    //кнопка лайка в карточке
    _handleLikeButton() {
-    this._element.querySelector('.button-like').classList.toggle('button-like_activ');
+    this._like.classList.toggle('button-like_activ');
   }
   //удаление карточки
   _handleDeleteButton() {
-    //console.log(this._element);
     this._element.remove();
+    this._element = null;
   }
 
 }

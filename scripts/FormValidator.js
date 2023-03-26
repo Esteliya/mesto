@@ -81,12 +81,7 @@ removeValidationErrors = () => {
   }
   //запускаем валидацию форм
 enableValidation = () => {
-  this._inputs.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
-    this._setEventListeners(this._inputs);
-  });
+  this._setEventListeners(this._inputs);
 }
 }
 

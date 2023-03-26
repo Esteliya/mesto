@@ -7,7 +7,7 @@ const addButton = document.querySelector('.add-button');//кнопка доба�
 //профиль на странице
 const userName = document.querySelector('.profile__user-firstname');//строка профиля: имя пользователя
 const userJob = document.querySelector('.profile__user-profession');//строка профиля: профессия пользователя
-
+const cards = document.querySelector('.cards')//блок с карточками
 //ПОПАПЫ
 //попап редактирования профиля
 const profilePopup = document.querySelector('.profile-popup');//див попапа редактирования профиля
@@ -109,8 +109,7 @@ function handlerClosingFormPopupAddCard () {
 
 //закрытие попапа по клику на оверлей
 const popup = document.querySelectorAll('.popup');//общий класс всех попапов
-popup.forEach((popups) => {
-  const popup = popups.closest('.popup');
+popup.forEach((popup) => {
   const closePopupOnClickOverlay = (event) => {
     if (event.target === event.currentTarget) {
     closePopup (popup);
@@ -119,14 +118,17 @@ popup.forEach((popups) => {
 popup.addEventListener('click', closePopupOnClickOverlay);
 });
 
+//создание карточки
+function createCard (data, templateSelector) {
+  const newCard = new Card(data, templateSelector);
+  const cardElement = newCard.generateCard();
+  return cardElement;
+}
+
 //перебираем массив
 initialCards.forEach((item) => {
-  //получаем дефолтные карточки из массива
-  const defoultCard = new Card(item, '#templite-card');
-  const cardElement = defoultCard.generateCard();
-
   // Добавляем в DOM
-  document.querySelector('.cards').append(cardElement);//вставляем карточки на страницу
+  cards.append(createCard (item, '#templite-card'));//вставляем карточки на страницу
 });
 
 //СОЗДАЕМ КАРТОЧКИ
@@ -137,12 +139,9 @@ formAddCardPopup.addEventListener('submit', (e) => {
     name: inputNameAddCardPopup.value,
     link: inputLinkAddCardPopup.value,
   }
-  const userCard = new Card(userData, '#templite-card');
-  const cardElement = userCard.generateCard();
   handlerClosingFormPopupAddCard ()
-
   // Добавляем в DOM
-  document.querySelector('.cards').prepend(cardElement);//вставляем карточки на страницу (начало)
+  cards.prepend(createCard(userData, '#templite-card'));//вставляем карточки на страницу (начало)
 });
 
 //ВАЛИДАЦИЯ
