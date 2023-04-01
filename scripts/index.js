@@ -30,6 +30,7 @@ const photoPopupImageZoom = document.querySelector('.popap-photo')//попап: 
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { initialCards, selectors } from "./customize.js";
+import  Section  from "./Section.js";
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 
@@ -125,11 +126,25 @@ function createCard (data, templateSelector) {
   return cardElement;
 }
 
+/*
 //перебираем массив
 initialCards.forEach((item) => {
   // Добавляем в DOM
   cards.append(createCard (item, '#templite-card'));//вставляем карточки на страницу
 });
+*/
+
+//карточки из массива
+const defaultCard = new Section (
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const newCards = createCard (item, '#templite-card');
+      defaultCard.addItem(newCards);//вставляем карточки на страницу
+    }
+  }, '.cards')
+  defaultCard.rendererItems();
+
 
 //СОЗДАЕМ КАРТОЧКИ
 //проверка данных инпута
