@@ -134,6 +134,7 @@ initialCards.forEach((item) => {
 });
 */
 
+//СОЗДАЕМ КАРТОЧКИ
 //карточки из массива
 const defaultCard = new Section (
   {
@@ -142,11 +143,31 @@ const defaultCard = new Section (
       const newCards = createCard (item, '#templite-card');
       defaultCard.addItem(newCards);//вставляем карточки на страницу
     }
-  }, '.cards')
+  },
+  '.cards')
   defaultCard.rendererItems();
 
-
-//СОЗДАЕМ КАРТОЧКИ
+  //карточки пользователя (из попапа)
+  formAddCardPopup.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const userData = {
+      name: inputNameAddCardPopup.value,
+      link: inputLinkAddCardPopup.value,
+    }
+    //console.log(userData);
+    const userNewCard = new Section (
+      {
+        items: [userData],//массив с валидными полями
+        renderer: (item) => {
+        const newCard = createCard (item, '#templite-card');
+        userNewCard.addItemStart(newCard);//вставляем карточки на страницу
+      }
+     },
+     '.cards');
+     handlerClosingFormPopupAddCard ();//закрыли попап
+     userNewCard.rendererItems();
+  });
+/*
 //проверка данных инпута
 formAddCardPopup.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -158,6 +179,8 @@ formAddCardPopup.addEventListener('submit', (e) => {
   // Добавляем в DOM
   cards.prepend(createCard(userData, '#templite-card'));//вставляем карточки на страницу (начало)
 });
+*/
+
 
 //ВАЛИДАЦИЯ
 //валидация формы редактирования профиля
