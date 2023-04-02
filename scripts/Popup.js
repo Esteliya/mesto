@@ -1,11 +1,12 @@
 export default class Popup {
   constructor (popupSelector) {
     this._popupSelector = popupSelector;// селектор попапа
+    //this._popupSelector = document.querySelector(popupSelector);
     this._closeButton = this._popupSelector.querySelector('.close-button');//кнопка закрытия
   }
   //открытие попапа
   open = (element) => {
-    element.classList.add('.popup_open');//добавили класс
+    element.classList.add('popup_open');//добавили класс
   }
   //закрытие попапа
   close = (element) => {
@@ -14,19 +15,23 @@ export default class Popup {
   //закрываем по нажатию Esc
   _handleEscClose = (e) => {
     if (e.key === "Escape") {
-      this.close (element);
+      clonsole.log('нажали Esc');
+      this.close (this._popupSelector);
     }
   }
 //закрываем по клику на оверлей
-  _handleOverlayClick = (e, element) => {
+  _handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-      this.close (element);
+      clonsole.log('клик по оверлею');
+      this.close (this._popupSelector);
   }
 
   //слушатель
   setEventListeners = () => {
     this._closeButton.addEventListener('click', this.close(this._popupSelector));//клик по кнопке Закрыть
-    this._popupSelector.addEventListener('click', this._handleOverlayClick(this._popupSelector));//клик по оверлею
+    console.log(this._closeButton);
+    this._popupSelector.addEventListener('click', this._handleOverlayClick);//клик по оверлею
+    document.addEventListener('keydown', this._handleEscClose);//слушатель Esc
 }
 }
 }

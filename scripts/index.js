@@ -34,7 +34,7 @@ import  Section  from "./Section.js";
 import  Popup  from "./Popup.js";
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
-
+/*
 //функция закрытия попапа по нажатию кнопки Esc
 const closesEscepe = (e) => {
   if (e.key === "Escape") {
@@ -42,7 +42,6 @@ const closesEscepe = (e) => {
     closePopup (element);
   }
 }
-
 //обработчик открытия формы
 function openPopup (element) {
   element.classList.add('popup_open');
@@ -55,6 +54,7 @@ function closePopup (element) {
   //удаляем обработчик кнопки Esc
   document.removeEventListener('keydown', closesEscepe);
 }
+*/
 
 //РЕДАКТИРОВАНИЕ
 //пользователь вносит изменения в профиль
@@ -88,12 +88,14 @@ function handlerOpeningPopapImageZoom (name, link) {
 }
 
 addButton.addEventListener('click', () => {
-  console.log('работает');
+  //console.log('работает');
   const popupFormCard = new Popup (addCardPopup);
-  console.log('еще работает');
-    popupFormCard.open(addCardPopup);
-    console.log('и тут работает');
+  //console.log('еще работает');
+  popupFormCard.open(addCardPopup);
+  //console.log('и тут работает');
+  popupFormCard.setEventListeners();
   });
+
 
 /*
 //открываем попап добавления карточки
@@ -106,7 +108,7 @@ addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
 */
 
 
-
+/*
 //ЗАКРЫТИЕ ПОПАПОВ
 //универсальный обработчик закрытия попапов
 closeButtons.forEach((button) => {
@@ -134,6 +136,7 @@ popup.forEach((popup) => {
 };
 popup.addEventListener('click', closePopupOnClickOverlay);
 });
+*/
 
 //создание карточки
 function createCard (data, templateSelector) {
