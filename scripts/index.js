@@ -31,6 +31,7 @@ import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { initialCards, selectors } from "./customize.js";
 import  Section  from "./Section.js";
+import  Popup  from "./Popup.js";
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 
@@ -66,6 +67,7 @@ function editProfile(eve){
 editForm.addEventListener('submit', editProfile);
 
 //ОТКРЫВАЕМ ПОПАПЫ
+
 //открываем попап редактирования профиля
 function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
@@ -74,6 +76,7 @@ function handlerOpeningFormPopupProfile () {
   validatorEditProfile.removeValidationErrors();
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
+
 // открываем картинку из карточки
 function handlerOpeningPopapImageZoom (name, link) {
   const photo = photoPopupImageZoom;
@@ -83,6 +86,16 @@ function handlerOpeningPopapImageZoom (name, link) {
   title.textContent = name;
   openPopup(popapImageZoom);
 }
+
+addButton.addEventListener('click', () => {
+  console.log('работает');
+  const popupFormCard = new Popup (addCardPopup);
+  console.log('еще работает');
+    popupFormCard.open(addCardPopup);
+    console.log('и тут работает');
+  });
+
+/*
 //открываем попап добавления карточки
 function handlerOpeningFormPopupAddCard () {
   formAddCardPopup.reset();
@@ -90,6 +103,9 @@ function handlerOpeningFormPopupAddCard () {
   validatorformAddCard.removeValidationErrors();
 }
 addButton.addEventListener('click', handlerOpeningFormPopupAddCard);
+*/
+
+
 
 //ЗАКРЫТИЕ ПОПАПОВ
 //универсальный обработчик закрытия попапов
