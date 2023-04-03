@@ -7,6 +7,7 @@ export default class Popup {
   //открытие попапа
   open = (element) => {
     element.classList.add('popup_open');//добавили класс
+    this.setEventListeners();
   }
   //закрытие попапа
   close = (element) => {
@@ -29,7 +30,7 @@ export default class Popup {
   //слушатель
   setEventListeners = () => {
     this._closeButton.addEventListener('click', this.close(this._popupSelector));//клик по кнопке Закрыть
-    console.log(this._closeButton);
+    //console.log(this._closeButton);
     this._popupSelector.addEventListener('click', this._handleOverlayClick);//клик по оверлею
     document.addEventListener('keydown', this._handleEscClose);//слушатель Esc
 }
