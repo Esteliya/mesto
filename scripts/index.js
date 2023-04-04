@@ -89,11 +89,11 @@ function handlerOpeningPopapImageZoom (name, link) {
 
 addButton.addEventListener('click', () => {
   //console.log('работает');
-  const popupFormCard = new Popup (addCardPopup);
+  const popupFormCard = new Popup ('.add-card-popup');
   //console.log('еще работает');
-  popupFormCard.open(addCardPopup);
+  popupFormCard.open('.add-card-popup');
   //console.log('и тут работает');
-  popupFormCard.setEventListeners();
+  //popupFormCard.setEventListeners();
   });
 
 
