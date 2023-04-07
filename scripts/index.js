@@ -31,7 +31,115 @@ import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { initialCards, selectors } from "./customize.js";
 import  Section  from "./Section.js";
-import  Popup  from "./Popup.js";
+//import  Popup  from "./Popup.js";
+import  PopupWithForm  from "./PopupWithForm.js";
+//import  PopupWithImage  from "./PopupWithImage.js";
+import UserInfo from "./UserInfo.js";
+
+/*
+//попап добавления карточки
+addButton.addEventListener('click', () => {
+  const popupFormCard = new PopupWithForm ('.add-card-popup');
+  popupFormCard.open();
+  validatorformAddCard.removeValidationErrors();
+  });
+*/
+
+  //ВАЛИДАЦИЯ
+//валидация формы редактирования профиля
+const validatorEditProfile = new FormValidator(selectors, editForm);
+validatorEditProfile.enableValidation();
+
+//валидация формы создания карточки
+const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
+validatorformAddCard.enableValidation();
+
+
+//открываем попап редактирования пользователя
+const popupEditProfile = () => {
+  const defaultUserData = userProfile.getUserInfo();//данные по умолчанию
+  //переносим данные в инпуты формы
+  nameEdit.value = defaultUserData.userName;//в инпут имени дефолтное имя
+  profEdit.value = defaultUserData.userAbout;//в инпут профессии дефолтную профессиию
+  validatorEditProfile.removeValidationErrors();//сбрасываем поля/дизейбл кнопки
+  popupFormProfile.open();//открыли попап редактирования профиля
+}
+
+//ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
+const userProfile = new UserInfo({
+  nameSelector: ".profile__user-firstname",
+  aboutSelector: ".profile__user-profession",
+});
+
+//обработчик
+const handleFormSubmitEdit = ()=> {
+  userProfile.setUserInfo({
+    userName: nameEdit.value,//инпут имени
+    userAbout: profEdit.value,//инпут профессии
+  });
+}
+
+//СОЗДАЕМ КАРТОЧКИ
+
+//создание карточки
+function createCard (data, templateSelector) {
+  const newCard = new Card(data, templateSelector);
+  const cardElement = newCard.generateCard();
+  return cardElement;
+}
+//карточки из массива
+const defaultCard = new Section (
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const newCards = createCard (item, '#templite-card');
+      defaultCard.addItem(newCards);//вставляем карточки на страницу
+    }
+  },
+  '.cards')
+  defaultCard.rendererItems();
+
+  //карточки пользователя (из попапа)
+  formAddCardPopup.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const userData = {
+      name: inputNameAddCardPopup.value,
+      link: inputLinkAddCardPopup.value,
+    }
+    //console.log(userData);
+    const userNewCard = new Section (
+      {
+        items: [userData],//массив с валидными полями
+        renderer: (item) => {
+        const newCard = createCard (item, '#templite-card');
+        userNewCard.addItemStart(newCard);//вставляем карточки на страницу
+      }
+     },
+     '.cards');
+     //handlerClosingFormPopupAddCard ();//закрыли попап
+     userNewCard.rendererItems();
+  });
+
+  //ПОПАПЫ
+//попап редактирования профиля
+const popupFormProfile = new PopupWithForm ('.profile-popup', handleFormSubmitEdit);
+
+//СЛУШАТЕЛИ
+//попап редактирования профиля
+editButton.addEventListener('click', popupEditProfile);//открываем попап редактирования профиля
+
+
+/*
+//РЕДАКТИРОВАНИЕ
+//пользователь вносит изменения в профиль
+function editProfile(eve){
+  eve.preventDefault();
+  userName.textContent = nameEdit.value;
+  userJob.textContent = profEdit.value;
+  //handlerClosingFormPopupProfile ();
+}
+editForm.addEventListener('submit', editProfile);
+*/
 
 //ШАБЛОННЫЕ ОБРАБОТЧИКИ
 /*
@@ -56,18 +164,8 @@ function closePopup (element) {
 }
 */
 
-//РЕДАКТИРОВАНИЕ
-//пользователь вносит изменения в профиль
-function editProfile(eve){
-  eve.preventDefault();
-  userName.textContent = nameEdit.value;
-  userJob.textContent = profEdit.value;
-  handlerClosingFormPopupProfile ();
-}
-editForm.addEventListener('submit', editProfile);
-
 //ОТКРЫВАЕМ ПОПАПЫ
-
+/*
 //открываем попап редактирования профиля
 function handlerOpeningFormPopupProfile () {
   openPopup (profilePopup)
@@ -76,7 +174,8 @@ function handlerOpeningFormPopupProfile () {
   validatorEditProfile.removeValidationErrors();
 }
 editButton.addEventListener('click', handlerOpeningFormPopupProfile);
-
+*/
+/*
 // открываем картинку из карточки
 function handlerOpeningPopapImageZoom (name, link) {
   const photo = photoPopupImageZoom;
@@ -86,7 +185,16 @@ function handlerOpeningPopapImageZoom (name, link) {
   title.textContent = name;
   openPopup(popapImageZoom);
 }
+*/
 
+/*
+//попап добавления карточки
+addButton.addEventListener('click', () => {
+  const popupFormCard = new Popup ('.add-card-popup');
+  popupFormCard.open('.add-card-popup');
+  });
+  */
+  /*
 addButton.addEventListener('click', () => {
   //console.log('работает');
   const popupFormCard = new Popup ('.add-card-popup');
@@ -96,7 +204,7 @@ addButton.addEventListener('click', () => {
   //popupFormCard.setEventListeners();
   });
 
-
+*/
 /*
 //открываем попап добавления карточки
 function handlerOpeningFormPopupAddCard () {
@@ -138,13 +246,6 @@ popup.addEventListener('click', closePopupOnClickOverlay);
 });
 */
 
-//создание карточки
-function createCard (data, templateSelector) {
-  const newCard = new Card(data, templateSelector);
-  const cardElement = newCard.generateCard();
-  return cardElement;
-}
-
 /*
 //перебираем массив
 initialCards.forEach((item) => {
@@ -153,39 +254,7 @@ initialCards.forEach((item) => {
 });
 */
 
-//СОЗДАЕМ КАРТОЧКИ
-//карточки из массива
-const defaultCard = new Section (
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const newCards = createCard (item, '#templite-card');
-      defaultCard.addItem(newCards);//вставляем карточки на страницу
-    }
-  },
-  '.cards')
-  defaultCard.rendererItems();
 
-  //карточки пользователя (из попапа)
-  formAddCardPopup.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const userData = {
-      name: inputNameAddCardPopup.value,
-      link: inputLinkAddCardPopup.value,
-    }
-    //console.log(userData);
-    const userNewCard = new Section (
-      {
-        items: [userData],//массив с валидными полями
-        renderer: (item) => {
-        const newCard = createCard (item, '#templite-card');
-        userNewCard.addItemStart(newCard);//вставляем карточки на страницу
-      }
-     },
-     '.cards');
-     handlerClosingFormPopupAddCard ();//закрыли попап
-     userNewCard.rendererItems();
-  });
 /*
 //проверка данных инпута
 formAddCardPopup.addEventListener('submit', (e) => {
@@ -201,14 +270,7 @@ formAddCardPopup.addEventListener('submit', (e) => {
 */
 
 
-//ВАЛИДАЦИЯ
-//валидация формы редактирования профиля
-const validatorEditProfile = new FormValidator(selectors, editForm);
-validatorEditProfile.enableValidation();
 
-//валидация формы создания карточки
-const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
-validatorformAddCard.enableValidation();
 
-//ЭКСПОРТ
-export { handlerOpeningPopapImageZoom };
+
+
