@@ -47,6 +47,7 @@ class Card {
     this._image.addEventListener('click', () => {
       const zoomImage = new PopupWithImage('.zoom-img-popap');
       zoomImage.open(this._data);
+      zoomImage.setEventListeners();
       //handlerOpeningPopapImageZoom(this._name, this._link);
     });
   }

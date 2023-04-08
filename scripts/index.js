@@ -83,8 +83,8 @@ const handleFormSubmitEdit = (data)=> {
 //СОЗДАЕМ КАРТОЧКИ
 
 //создание карточки
-function createCard (data, templateSelector) {
-  const newCard = new Card(data, templateSelector);
+function createCard (data) {
+  const newCard = new Card(data, '#templite-card');
   const cardElement = newCard.generateCard();
   return cardElement;
 }
@@ -93,13 +93,13 @@ const defaultCard = new Section (
   {
     items: initialCards,
     renderer: (item) => {
-      const newCards = createCard (item, '#templite-card');
+      const newCards = createCard (item);
       defaultCard.addItem(newCards);//вставляем карточки на страницу
     }
   },
   '.cards')
   defaultCard.rendererItems();
-
+/*
   //карточки пользователя (из попапа)
   formAddCardPopup.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -112,7 +112,7 @@ const defaultCard = new Section (
       {
         items: [userData],//массив с валидными полями
         renderer: (item) => {
-        const newCard = createCard (item, '#templite-card');
+        const newCard = createCard (item);
         userNewCard.addItemStart(newCard);//вставляем карточки на страницу
       }
      },
@@ -120,16 +120,37 @@ const defaultCard = new Section (
      //handlerClosingFormPopupAddCard ();//закрыли попап
      userNewCard.rendererItems();
   });
+*/
+//отрисовка карточки в DOM
+const renderCard = (data) => {
+  cards.prepend(createCard(data));
+};
+
+// создаем карточку пользователя
+const addUserCard = () => {
+  //console.log('пустой коллбэк работает. ЗАПОЛНИТЬ!')
+  const cardItem = {
+    name: inputNameAddCardPopup.value,
+    link: inputLinkAddCardPopup.value,
+  };
+  renderCard(cardItem);
+}
 
   //ПОПАПЫ
 //попап редактирования профиля
 const popupFormProfile = new PopupWithForm ('.profile-popup', handleFormSubmitEdit);
 popupFormProfile.setEventListeners();
+//попап добавления пользовательской карточки
+const popupAddCard = new PopupWithForm ('.add-card-popup', addUserCard);//добавить коллбэк!
+popupAddCard.setEventListeners();
 
 //СЛУШАТЕЛИ
-//попап редактирования профиля
+//открываем попап редактирования профиля
 editButton.addEventListener('click', popupEditProfile);//открываем попап редактирования профиля
-
+//открываем попап добавления пользовательской карточки
+addButton.addEventListener('click', () => {
+  popupAddCard.open();
+});
 
 /*
 //РЕДАКТИРОВАНИЕ
