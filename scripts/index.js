@@ -33,7 +33,7 @@ import { initialCards, selectors } from "./customize.js";
 import  Section  from "./Section.js";
 //import  Popup  from "./Popup.js";
 import  PopupWithForm  from "./PopupWithForm.js";
-//import  PopupWithImage  from "./PopupWithImage.js";
+import  PopupWithImage  from "./PopupWithImage.js";
 import UserInfo from "./UserInfo.js";
 
 /*
@@ -84,10 +84,21 @@ const handleFormSubmitEdit = (data)=> {
 
 //создание карточки
 function createCard (data) {
+  const newCard = new Card(data, '#templite-card', () => {
+    popupZoomImage.open(data);
+  });
+  const cardElement = newCard.generateCard();
+  return cardElement;
+}
+
+/*
+function createCard (data) {
   const newCard = new Card(data, '#templite-card');
   const cardElement = newCard.generateCard();
   return cardElement;
 }
+*/
+
 //карточки из массива
 const defaultCard = new Section (
   {
@@ -143,6 +154,8 @@ popupFormProfile.setEventListeners();
 //попап добавления пользовательской карточки
 const popupAddCard = new PopupWithForm ('.add-card-popup', addUserCard);//добавить коллбэк!
 popupAddCard.setEventListeners();
+const popupZoomImage = new PopupWithImage('.zoom-img-popap');
+popupZoomImage.setEventListeners();
 
 //СЛУШАТЕЛИ
 //открываем попап редактирования профиля

@@ -1,14 +1,15 @@
 //ИМПОРТ
 //import { handlerOpeningPopapImageZoom } from "./index.js";
-import  PopupWithImage  from "./PopupWithImage.js";
+//import  PopupWithImage  from "./PopupWithImage.js";
 
 //КЛАССЫ и ООП
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._data = data;
     this._name = data.name;//имя
     this._link = data.link;//картинка
     this._templateSelector = templateSelector;//темплит
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -33,6 +34,10 @@ class Card {
     return this._element;
   }
 
+  _zoomImageCard() {
+    this._handleCardClick(this._data);
+  }
+
   //обработчик слушателей
   _setEventListeners() {
     //слушатель кнопки лайка
@@ -45,10 +50,13 @@ class Card {
     });
     //слушаетль карточки - увеличение картинки
     this._image.addEventListener('click', () => {
+      this._zoomImageCard();
+      /*
       const zoomImage = new PopupWithImage('.zoom-img-popap');
       zoomImage.open(this._data);
       zoomImage.setEventListeners();
       //handlerOpeningPopapImageZoom(this._name, this._link);
+      */
     });
   }
    //кнопка лайка в карточке
