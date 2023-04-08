@@ -55,27 +55,28 @@ const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
 validatorformAddCard.enableValidation();
 
 
-//открываем попап редактирования пользователя
+//открываем попап редактирования профиля. Вызываем в слушателе кнопки редактирования.
 const popupEditProfile = () => {
-  const defaultUserData = userProfile.getUserInfo();//данные по умолчанию
+  const defaultUserData = userProfile.getUserInfo();//данные по умолчанию (ловим из профиля)
   //переносим данные в инпуты формы
   nameEdit.value = defaultUserData.userName;//в инпут имени дефолтное имя
   profEdit.value = defaultUserData.userAbout;//в инпут профессии дефолтную профессиию
-  validatorEditProfile.removeValidationErrors();//сбрасываем поля/дизейбл кнопки
+  validatorEditProfile.removeValidationErrors();//сбрасываем ошибки
+  //validatorEditProfile.disabledButton(selectors);
   popupFormProfile.open();//открыли попап редактирования профиля
 }
 
 //ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
 const userProfile = new UserInfo({
-  nameSelector: ".profile__user-firstname",
-  aboutSelector: ".profile__user-profession",
+  nameSelector: ".profile__user-firstname",//html-строка имени профиля
+  aboutSelector: ".profile__user-profession",//html-строка профессии
 });
 
-//обработчик
-const handleFormSubmitEdit = ()=> {
+//передаем в профиль данные из формы. Вызываем при создании попапа.
+const handleFormSubmitEdit = (data)=> {
   userProfile.setUserInfo({
-    userName: nameEdit.value,//инпут имени
-    userAbout: profEdit.value,//инпут профессии
+    userName: data.firstname,//инпут имени
+    userAbout: data.profession,//инпут профессии
   });
 }
 
@@ -123,6 +124,7 @@ const defaultCard = new Section (
   //ПОПАПЫ
 //попап редактирования профиля
 const popupFormProfile = new PopupWithForm ('.profile-popup', handleFormSubmitEdit);
+popupFormProfile.setEventListeners();
 
 //СЛУШАТЕЛИ
 //попап редактирования профиля

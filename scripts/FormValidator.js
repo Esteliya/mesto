@@ -78,6 +78,7 @@ removeValidationErrors = () => {
   this._inputs.forEach((inputElement) => {
     this._hideInputError(inputElement);
     });
+    this.disabledButton (this._data);
   }
   //запускаем валидацию форм
 enableValidation = () => {

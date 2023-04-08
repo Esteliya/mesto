@@ -13,12 +13,12 @@ export default class PopupWithForm extends Popup {
 
   //получаем значения инпутов
   _getInputValues() {
-    this._formElement = {};
+    const inputElement = {};
     this._inputs.forEach((input) => {
-      this._formElement[input.name] = input.value;
+      inputElement[input.name] = input.value;
     });
-    console.log( this._formElement);
-    return  this._formElement;//получили значение полей
+    console.log(inputElement);
+    return inputElement;//получили значение полей
   }
 
   close() {
