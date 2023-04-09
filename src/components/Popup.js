@@ -6,10 +6,14 @@ export default class Popup {
   //открытие попапа +
   open() {
     this._popup.classList.add('popup_open');//добавили класс
+     //добавляем слушатель Esc
+     document.addEventListener('keydown', this._handleEscClose);
   }
   //закрытие попапа +
   close() {
     this._popup.classList.remove('popup_open');//удалили класс
+         //добавляем слушатель Esc
+         document.removeEventListener('keydown', this._handleEscClose);
   }
   //закрываем по нажатию Esc +
   _handleEscClose = (e) => {
@@ -29,7 +33,5 @@ export default class Popup {
         this.close ();
       };
     });
-    //слушатель Esc
-    document.addEventListener('keydown', this._handleEscClose);
 }
 }

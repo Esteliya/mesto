@@ -70,14 +70,13 @@ function createCard (data) {
 //карточки из массива
 const defaultCard = new Section (
   {
-    items: initialCards,
     renderer: (item) => {
       const newCards = createCard (item);
       defaultCard.addItem(newCards);//вставляем карточки на страницу
     }
   },
   '.cards')
-  defaultCard.rendererItems();
+  defaultCard.rendererItems(initialCards);//передаем массив данных карточек
 
 //отрисовка карточки в DOM
 const renderCard = (data) => {
