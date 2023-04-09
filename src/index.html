@@ -3,17 +3,16 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="./pages/index.css">
       <title>Место</title>
    </head>
    <body class="page">
       <header class="header">
-         <img src="./images/logo-mesto.svg" alt="Логотип Место." class="logo">
+         <img src="<%=require('./images/logo-mesto.svg')%>" alt="Логотип Место." class="logo">
       </header>
       <main>
          <section aria-label="Профиль пользователя" class="profile">
             <div class="profile__user">
-               <img src="./images/avatar.jpg" alt="Портрет Кусто." class="profile__avatar">
+               <img src="<%=require('./images/avatar.jpg')%>" alt="Портрет Кусто." class="profile__avatar">
                <div class="profile__data">
                   <div class="profile__user-name">
                      <h1 class="profile__user-firstname">Жак-Ив Кусто</h1>
@@ -75,6 +74,5 @@
             </div>
          </div>
       </div>
-      <script defer type="module" src="./pages/index.js"></script>
    </body>
 </html>
