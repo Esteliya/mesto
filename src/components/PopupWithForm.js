@@ -6,7 +6,6 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);//родителя
     this._submitForm = submitForm;//ждем коллбэк отправки формы
     this._form = this._popup.querySelector('.edit-form');//форма попапа
-    //this._input = ??
     this._inputs = Array.from(this._form.querySelectorAll('.edit-form__personalia'))//массив инпутов
     this._button = this._form.querySelector('.save-button');//кнопка сохранить
   }
@@ -17,7 +16,6 @@ export default class PopupWithForm extends Popup {
     this._inputs.forEach((input) => {
       inputElement[input.name] = input.value;
     });
-    console.log(inputElement);
     return inputElement;//получили значение полей
   }
 
@@ -32,9 +30,7 @@ export default class PopupWithForm extends Popup {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submitForm(this._getInputValues());
-      console.log('получили данные из формы');
       this.close();
-      console.log('закрыли попап');
     });
 }
 }

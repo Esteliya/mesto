@@ -1,7 +1,3 @@
-//ИМПОРТ
-//import { handlerOpeningPopapImageZoom } from "./index.js";
-//import  PopupWithImage  from "./PopupWithImage.js";
-
 //КЛАССЫ и ООП
 class Card {
   constructor(data, templateSelector, handleCardClick) {
@@ -51,12 +47,6 @@ class Card {
     //слушаетль карточки - увеличение картинки
     this._image.addEventListener('click', () => {
       this._zoomImageCard();
-      /*
-      const zoomImage = new PopupWithImage('.zoom-img-popap');
-      zoomImage.open(this._data);
-      zoomImage.setEventListeners();
-      //handlerOpeningPopapImageZoom(this._name, this._link);
-      */
     });
   }
    //кнопка лайка в карточке
