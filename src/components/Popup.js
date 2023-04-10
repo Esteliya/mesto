@@ -12,7 +12,7 @@ export default class Popup {
   //закрытие попапа +
   close() {
     this._popup.classList.remove('popup_open');//удалили класс
-         //добавляем слушатель Esc
+         //удаляем слушатель Esc
          document.removeEventListener('keydown', this._handleEscClose);
   }
   //закрываем по нажатию Esc +
