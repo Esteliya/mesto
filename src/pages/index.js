@@ -5,6 +5,8 @@ import {
   editButton,
   addButton,
   cards,
+  userName,
+  userAbout,
   nameEdit,
   profEdit,
   editForm,
@@ -15,7 +17,7 @@ import {
 
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
-import { initialCards, selectors } from "../components/customize.js";
+import { selectors } from "../components/customize.js";
 import  Section  from "../components/Section.js";
 import  PopupWithForm  from "../components/PopupWithForm.js";
 import  PopupWithImage  from "../components/PopupWithImage.js";
@@ -54,6 +56,9 @@ const handleFormSubmitEdit = (data)=> {
     userName: data.firstname,//инпут имени
     userAbout: data.profession,//инпут профессии
   });
+  //console.log(`данные инпутов формы${data}`);
+  //console.log(data);
+  addDateProfile(data);
 }
 
 //СОЗДАЕМ КАРТОЧКИ
@@ -67,7 +72,7 @@ function createCard (data) {
   return cardElement;
 }
 
-//карточки из массива
+//дефолтные карточки (данные удаленного сервера)
 const defaultCard = new Section (
   {
     renderer: (item) => {
@@ -76,7 +81,8 @@ const defaultCard = new Section (
     }
   },
   '.cards')
-  defaultCard.rendererItems(initialCards);//передаем массив данных карточек
+ // defaultCard.rendererItems(initialCards);//передаем массив данных карточек
+
 
 //отрисовка карточки в DOM
 const renderCard = (data) => {
@@ -89,9 +95,15 @@ const addUserCard = () => {
     name: inputNameAddCardPopup.value,
     link: inputLinkAddCardPopup.value,
   };
+  //console.log(`данные из инпутов формы ${cardItem}`);
+  //console.log(cardItem);
+  addNewUserCard (cardItem)
   renderCard(cardItem);
+  //return cardItem;
 }
 
+//console.log(`данные из инпутов формы ${addUserCard}`);
+//debugger;
 //ПОПАПЫ
 //попап редактирования профиля
 const popupFormProfile = new PopupWithForm ('.profile-popup', handleFormSubmitEdit);
@@ -110,3 +122,100 @@ addButton.addEventListener('click', () => {
   popupAddCard.open();
   validatorformAddCard.removeValidationErrors();
 });
+
+//ЗАПРОСЫ СЕРВЕРУ
+//запросили данные профиля
+fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me', {
+  headers: {
+    authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  });
+
+// профиль пользователя
+
+//данные по умолчанию
+function defaulDateProfile () {
+fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me', {
+  headers: {
+    authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    //console.log(result);
+    userName.textContent = result.name;
+    userAbout.textContent = result.about;
+  });
+}
+
+
+//отправка данных профиля на сервер (тестовые строки)
+function addDateProfile (data) {
+  fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me', {
+    method: 'PATCH',
+    headers: {
+      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: data.firstname,
+      about: data.profession
+      //name: 'Marie Skłodowska Curie',//нужно имя из инпута??
+      //about: 'Physicist and Chemist'//нужна профессия из инпута??
+    })
+  });
+};
+
+
+// дефолтные карточки
+function defauldataCard () {
+  fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
+    headers: {
+      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
+    }
+  })
+    .then(res => res.json())
+    .then((result) => {
+      console.log(result);
+        defaultCard.rendererItems(result);//передаем данные карточек с сервера
+    });
+  }
+
+
+  //карточки пользователя из формы
+  function addNewUserCard (data) {
+    fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
+      method: 'POST',
+      headers: {
+        authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        data
+      )
+    });
+  }
+
+/*
+  const addNewUserCard = (data) => {
+  fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
+    method: ' POST',
+    headers: {
+      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+      data
+    )
+  })
+}
+*/
+//Вызываем обработчики запросов серверу
+defaulDateProfile ();
+defauldataCard ();
+//addDateProfile ();
+//addNewUserCard ();

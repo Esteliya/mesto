@@ -1,4 +1,5 @@
 //массив карточек из коробки
+/*
 const initialCards = [
   {
     name: 'Карелия',
@@ -25,6 +26,7 @@ const initialCards = [
     link: 'https://images.unsplash.com/photo-1630094466385-a9a7b8596ca8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
   },
 ];
+*/
 
 //КНОПКИ
 const editButton = document.querySelector('.edit-button');//кнопка редактирования профиля
@@ -33,6 +35,8 @@ const addButton = document.querySelector('.add-button');//кнопка доба�
 //СЕКЦИИ И БЛОКИ НА СТРАНИЦЕ
 //профиль на странице
 const cards = document.querySelector('.cards')//блок с карточками
+const userName = document.querySelector('.profile__user-firstname');//имя профиля
+const userAbout = document.querySelector('.profile__user-profession');//о себе
 //ПОПАПЫ
 //попап редактирования профиля
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
@@ -56,11 +60,13 @@ const selectors = {
 
   //ЭКСПОРТ
  export {
-  initialCards,
+  //initialCards,
   selectors,
   editButton,
   addButton,
   cards,
+  userName,
+  userAbout,
   nameEdit,
   profEdit,
   editForm,
