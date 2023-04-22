@@ -43,9 +43,9 @@
          <div class="popup__container">
             <form name="personalia" novalidate method="post" class="edit-form edit-form-profile">
                <h2 class="edit-form__title">Редактировать профиль</h2>
-               <input type="text" id="firstname" required minlength="2" maxlength="40" name="firstname" placeholder="Имя" class="edit-form__personalia">
+               <input type="text" id="firstname" required minlength="2" maxlength="40" name="name" placeholder="Имя" class="edit-form__personalia">
                <span class="firstname-error edit-form__personalia-error"></span>
-               <input type="text" id="profession" required minlength="2" maxlength="200" name="profession" placeholder="О себе" class="edit-form__personalia">
+               <input type="text" id="profession" required minlength="2" maxlength="200" name="about" placeholder="О себе" class="edit-form__personalia">
                <span class="profession-error edit-form__personalia-error"></span>
                <button type="submit" class="save-button">Сохранить</button>
             </form>
@@ -73,6 +73,13 @@
                <h2 class="popap-photo-title">Текст картинки</h2>
             </div>
          </div>
+      </div>
+      <div class="popup delete-card-popap test">
+        <div class="popup__container">
+          <h2 class="edit-form__title">Вы уверены?</h2>
+          <button type="button" class="save-button">Да</button>
+          <button type="button" aria-label="Закрыть." class="close-button"></button>
+        </div>
       </div>
    </body>
 </html>

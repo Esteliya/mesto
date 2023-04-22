@@ -13,15 +13,17 @@ import {
   inputNameAddCardPopup,
   inputLinkAddCardPopup,
   formAddCardPopup,
+ //apiSetting,//настройки api
 } from "../components/customize.js";
 
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
-import { selectors } from "../components/customize.js";
+import { selectors, apiSetting } from "../components/customize.js";
 import  Section  from "../components/Section.js";
 import  PopupWithForm  from "../components/PopupWithForm.js";
 import  PopupWithImage  from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
 
 
 //ВАЛИДАЦИЯ
@@ -34,12 +36,29 @@ const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
 validatorformAddCard.enableValidation();
 
 
+//API
+const api = new Api(apiSetting);
+
+//запрашиваем данные пользователя
+api.getUserInfo()
+.then((result) => {
+  //debugger;
+  userName.textContent = result.name;
+  userAbout.textContent = result.about;
+});
+//запрашиваем массив карточек с сервера
+api.getArrCards()
+.then ((res) => {
+  console.log(res);//получили массив
+  defaultCard.rendererItems(res);//вугрузили карточки с сервера
+});
+
 //открываем попап редактирования профиля. Вызываем в слушателе кнопки редактирования.
 const popupEditProfile = () => {
   const defaultUserData = userProfile.getUserInfo();//данные по умолчанию (ловим из профиля)
   //переносим данные в инпуты формы
-  nameEdit.value = defaultUserData.userName;//в инпут имени дефолтное имя
-  profEdit.value = defaultUserData.userAbout;//в инпут профессии дефолтную профессиию
+  nameEdit.value = defaultUserData.name;//в инпут имени дефолтное имя
+  profEdit.value = defaultUserData.about;//в инпут профессии дефолтную профессиию
   validatorEditProfile.removeValidationErrors();//сбрасываем ошибки
   popupFormProfile.open();//открыли попап редактирования профиля
 }
@@ -52,13 +71,12 @@ const userProfile = new UserInfo({
 
 //передаем в профиль данные из формы. Вызываем при создании попапа.
 const handleFormSubmitEdit = (data)=> {
-  userProfile.setUserInfo({
-    userName: data.firstname,//инпут имени
-    userAbout: data.profession,//инпут профессии
+  console.log(data);//ждем данные полей инпутов
+  api.patchUserInfo(data)//передаем данные инпутов на сервер +
+     userProfile.setUserInfo({
+    name: data.name,//инпут имени
+    about: data.about,//инпут профессии
   });
-  //console.log(`данные инпутов формы${data}`);
-  //console.log(data);
-  addDateProfile(data);
 }
 
 //СОЗДАЕМ КАРТОЧКИ
@@ -72,7 +90,7 @@ function createCard (data) {
   return cardElement;
 }
 
-//дефолтные карточки (данные удаленного сервера)
+//карточки из массива
 const defaultCard = new Section (
   {
     renderer: (item) => {
@@ -81,8 +99,7 @@ const defaultCard = new Section (
     }
   },
   '.cards')
- // defaultCard.rendererItems(initialCards);//передаем массив данных карточек
-
+  //defaultCard.rendererItems(initialCards);//передаем массив данных карточек
 
 //отрисовка карточки в DOM
 const renderCard = (data) => {
@@ -95,15 +112,30 @@ const addUserCard = () => {
     name: inputNameAddCardPopup.value,
     link: inputLinkAddCardPopup.value,
   };
-  //console.log(`данные из инпутов формы ${cardItem}`);
-  //console.log(cardItem);
-  addNewUserCard (cardItem)
+  console.log(cardItem);//ждем данные полей инпутов
+  api.postUserCard(cardItem);//передаем данные инпутов на сервер
+  //addNewUserCard(cardItem);
   renderCard(cardItem);
-  //return cardItem;
 }
 
-//console.log(`данные из инпутов формы ${addUserCard}`);
-//debugger;
+/*
+//ТАК РАБОТАЕТ↓
+
+function addNewUserCard (data) {
+  fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
+    method: 'POST',
+    headers: {
+      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+      data
+    )
+  });
+}
+*/
+
+
 //ПОПАПЫ
 //попап редактирования профиля
 const popupFormProfile = new PopupWithForm ('.profile-popup', handleFormSubmitEdit);
@@ -122,100 +154,3 @@ addButton.addEventListener('click', () => {
   popupAddCard.open();
   validatorformAddCard.removeValidationErrors();
 });
-
-//ЗАПРОСЫ СЕРВЕРУ
-//запросили данные профиля
-fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me', {
-  headers: {
-    authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
-  }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  });
-
-// профиль пользователя
-
-//данные по умолчанию
-function defaulDateProfile () {
-fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me', {
-  headers: {
-    authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
-  }
-})
-  .then(res => res.json())
-  .then((result) => {
-    //console.log(result);
-    userName.textContent = result.name;
-    userAbout.textContent = result.about;
-  });
-}
-
-
-//отправка данных профиля на сервер (тестовые строки)
-function addDateProfile (data) {
-  fetch('https://mesto.nomoreparties.co/v1/cohort-64/users/me', {
-    method: 'PATCH',
-    headers: {
-      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: data.firstname,
-      about: data.profession
-      //name: 'Marie Skłodowska Curie',//нужно имя из инпута??
-      //about: 'Physicist and Chemist'//нужна профессия из инпута??
-    })
-  });
-};
-
-
-// дефолтные карточки
-function defauldataCard () {
-  fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
-    headers: {
-      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
-    }
-  })
-    .then(res => res.json())
-    .then((result) => {
-      console.log(result);
-        defaultCard.rendererItems(result);//передаем данные карточек с сервера
-    });
-  }
-
-
-  //карточки пользователя из формы
-  function addNewUserCard (data) {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
-      method: 'POST',
-      headers: {
-        authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(
-        data
-      )
-    });
-  }
-
-/*
-  const addNewUserCard = (data) => {
-  fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
-    method: ' POST',
-    headers: {
-      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(
-      data
-    )
-  })
-}
-*/
-//Вызываем обработчики запросов серверу
-defaulDateProfile ();
-defauldataCard ();
-//addDateProfile ();
-//addNewUserCard ();

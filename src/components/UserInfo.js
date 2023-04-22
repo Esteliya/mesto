@@ -1,20 +1,20 @@
 export default class UserInfo {
   constructor({nameSelector, aboutSelector}) {
-    this.userName = document.querySelector(nameSelector);//имя пользователя
-    this.userAbout = document.querySelector(aboutSelector);//поле о себе
+    this.name = document.querySelector(nameSelector);//имя пользователя
+    this.about = document.querySelector(aboutSelector);//поле о себе
   }
 
   //вернем данные пользователя (для заполнения формы)
   getUserInfo() {
     return {
-      userName: this.userName.textContent,//имя пользователя
-      userAbout: this.userAbout.textContent,//о пользователе
+      name: this.name.textContent,//имя пользователя
+      about: this.about.textContent,//о пользователе
     };
   }
 
   //создает новые данне пользователя (получаем из формы)
-  setUserInfo({userName, userAbout}) {
-    this.userName.textContent = userName;//передаем имя
-    this.userAbout.textContent = userAbout;//передаем данные о пользователе
+  setUserInfo({name, about}) {
+    this.name.textContent = name;//передаем имя
+    this.about.textContent = about;//передаем данные о пользователе
   }
 }

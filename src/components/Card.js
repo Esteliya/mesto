@@ -6,6 +6,7 @@ class Card {
     this._link = data.link;//картинка
     this._templateSelector = templateSelector;//темплит
     this._handleCardClick = handleCardClick;
+    //this._userId = userId;//id пользователя
   }
 
   _getTemplate() {
@@ -22,13 +23,48 @@ class Card {
     this._element = this._getTemplate();
     this._like = this._element.querySelector('.button-like');
     this._image = this._element.querySelector('.card__image');
+    this._delete = this._element.querySelector('.button-remove');
+    //console.log('this._delete', this._delete);
     this._setEventListeners();
+    //this._requestId();
 
     this._image.style.backgroundImage = `url(${this._link})`;
     this._element.querySelector('.card__title').textContent = this._name;
 
     return this._element;
   }
+
+/*
+  _requestId () {
+    fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
+    headers: {
+      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb'
+    }
+  })
+    .then(res => res.json())
+    .then((result) => {
+      //console.log('проверка связи');
+      result.forEach((num) => {
+        console.log('как получить id', num.name, num.owner._id);
+        console.log(num.owner._id === 'eef2b9374335bd2cab413a6c');//ждем true
+        if (num.owner._id === 'eef2b9374335bd2cab413a6c') {//если true, добавляем класс
+          console.log('сравнили id', num.owner._id);
+          this._delete.classList.add('button-remove_show');
+          //this._element.querySelector('.button-remove').classList.add('button-remove_show');
+        } else {
+          this._delete.classList.remove('button-remove_show');
+        }
+      })
+
+
+        if (data.owner._id === myId) {
+          console.log('как получить id', num.owner._id);
+          //this._element.querySelector('.button-remove').classList.add('button-remove_show');
+        } console.log('все сломалось');
+
+      })
+  }
+*/
 
   _zoomImageCard() {
     this._handleCardClick(this._data);
@@ -59,6 +95,11 @@ class Card {
     this._element = null;
   }
 
+  //отображение кнопки удаления
+  _visualButtonDelete () {
+    this._element.querySelector('.button-remove').classList.add('button-remove_show');
+
+}
 }
 
 //ЭКСПОРТ
