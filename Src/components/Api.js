@@ -6,7 +6,7 @@ class Api {
 //проверяем ответ сервера
   _checkResponse (res) {
     if (res.ok) {//если все ок
-      console.log(res);
+      //console.log(res);
       return res.json();//вернули данные (объект)
     } else {
       Promise.reject(res.status);//завершаем действия с ошибкой
@@ -43,27 +43,27 @@ class Api {
 
   //создаем карточку пользователя -> отправляем данные на серввер
   postUserCard (data) {//ждем объект
-    debugger;
+    //debugger;
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(
         data,
-        /*
-        {name: data.name,
-        link: data.link}
-        */
         )
     })
     .then(this._checkResponse);
   }
 
+ //удаляем карточку
+ deleteCard (cardId) {
+  return fetch(`${this._url}/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: this._headers,
+  })
+  .then(this._checkResponse);
  }
 
- //отправляем данные карточки пользователя
-
-
-
+}
 
 //ЭКСПОРТ
 export { Api };

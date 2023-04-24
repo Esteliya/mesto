@@ -1,12 +1,15 @@
-//КЛАССЫ и ООП
 class Card {
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handlerCardClick, handlerOpenConfirmationPopup, userId) {
     this._data = data;
     this._name = data.name;//имя
     this._link = data.link;//картинка
+    this._id = data._id;//id карточки ???
+    this._ownerId = data.owner._id;
     this._templateSelector = templateSelector;//темплит
-    this._handleCardClick = handleCardClick;
-    //this._userId = userId;//id пользователя
+    this._handlerCardClick = handlerCardClick;//обработчик клика по карточке
+    this._handlerOpenConfirmationPopup = handlerOpenConfirmationPopup;//обработчик открытия попапа водтверждения удаления
+    this._userId = userId;
+    //console.log('userId', userId);
   }
 
   _getTemplate() {
@@ -30,6 +33,7 @@ class Card {
 
     this._image.style.backgroundImage = `url(${this._link})`;
     this._element.querySelector('.card__title').textContent = this._name;
+    this._createDeleteButton ();
 
     return this._element;
   }
@@ -67,37 +71,60 @@ class Card {
 */
 
   _zoomImageCard() {
-    this._handleCardClick(this._data);
+    this._handlerCardClick(this._data);
+  }
+
+  //показываем кнопку удаления -> проверяем по id создателя
+  _createDeleteButton () {
+    if (this._userId === this._ownerId) {
+      //console.log('userId',this._userId);
+      //console.log('ownerId',this._ownerId);
+      //debugger;
+      //console.log(true);
+      //this._createDeleteButton();
+      this._delete.classList.add('button-remove_show');
+    }
   }
 
   //обработчик слушателей
   _setEventListeners() {
     //слушатель кнопки лайка
     this._like.addEventListener('click', () => {
-      this._handleLikeButton();
+      this._handlerLikeButton();
     });
-    //слушатель кнопки удаления
+
+    /* //слушатель кнопки удаления
     this._element.querySelector('.button-remove').addEventListener('click', () => {
-      this._handleDeleteButton();
-    });
+      this._handlerDeleteButton();
+    }); */
+
     //слушаетль карточки - увеличение картинки
     this._image.addEventListener('click', () => {
       this._zoomImageCard();
     });
+    //слушатель кнопки удаления
+    this._delete.addEventListener('click', () => {
+      //this._handlerClickDeleteButton();
+      this._handlerOpenConfirmationPopup(this._id);
+    });
   }
    //кнопка лайка в карточке
-   _handleLikeButton() {
+   _handlerLikeButton() {
     this._like.classList.toggle('button-like_activ');
   }
-  //удаление карточки
-  _handleDeleteButton() {
+  //удаление карточки из разметки
+  handlerDeleteButton() {
     this._element.remove();
     this._element = null;
   }
-
+  /* //обработчик клика по кнопке удаления карточки (с сервера)
+  _handlerClickDeleteButton () {
+    this._handlerOpenConfirmationPopup(this._id);
+  } */
   //отображение кнопки удаления
   _visualButtonDelete () {
     this._element.querySelector('.button-remove').classList.add('button-remove_show');
+
 
 }
 }

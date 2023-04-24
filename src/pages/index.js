@@ -22,6 +22,7 @@ import { selectors, apiSetting } from "../components/customize.js";
 import  Section  from "../components/Section.js";
 import  PopupWithForm  from "../components/PopupWithForm.js";
 import  PopupWithImage  from "../components/PopupWithImage.js";
+import  СonfirmationPopup  from "../components/СonfirmationPopup.js";
 import UserInfo from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 
@@ -39,19 +40,32 @@ validatorformAddCard.enableValidation();
 //API
 const api = new Api(apiSetting);
 
-//запрашиваем данные пользователя
+//получаем одновременно данные сервера
+Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
+.then (([userData, cardsData]) => {
+  userProfile.setUserInfo (userData);//выводим на страницу данные профиля
+
+  //console.log('cardsData', cardsData);//массив карточек
+  defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
+})
+.catch((err) => {
+  console.log(`Ошибка: ${err}`);
+});
+
+/* //запрашиваем данные пользователя
 api.getUserInfo()
 .then((result) => {
   //debugger;
   userName.textContent = result.name;
   userAbout.textContent = result.about;
-});
-//запрашиваем массив карточек с сервера
+}); */
+
+/* //запрашиваем массив карточек с сервера
 api.getArrCards()
 .then ((res) => {
-  console.log(res);//получили массив
+  //console.log(res);//получили массив
   defaultCard.rendererItems(res);//вугрузили карточки с сервера
-});
+}); */
 
 //открываем попап редактирования профиля. Вызываем в слушателе кнопки редактирования.
 const popupEditProfile = () => {
@@ -70,39 +84,70 @@ const userProfile = new UserInfo({
 });
 
 //передаем в профиль данные из формы. Вызываем при создании попапа.
-const handleFormSubmitEdit = (data)=> {
-  console.log(data);//ждем данные полей инпутов
+const handlerFormSubmitEdit = (data)=> {
+  //console.log(data);//ждем данные полей инпутов
   api.patchUserInfo(data)//передаем данные инпутов на сервер +
      userProfile.setUserInfo({
     name: data.name,//инпут имени
     about: data.about,//инпут профессии
   });
 }
+//обработчик формы подтверждения удаления
+const handlerFormSubmitСonfirmation = (cardId, newCard) => {
+//console.log('все работает');
+api.deleteCard (cardId)
+.then (() => {
+  newCard.handlerDeleteButton();
+  confirmationPopup.close();
+})
+.catch((error) => console.log(`Ошибка: ${error}`))
+
+};
 
 //СОЗДАЕМ КАРТОЧКИ
 
 //создание карточки
 function createCard (data) {
-  const newCard = new Card(data, '#templite-card', () => {
-    popupZoomImage.open(data);
-  });
+  const newCard = new Card(
+    data,
+    '#templite-card',
+    () => {
+      popupZoomImage.open(data);
+    },
+    //функция обработчик клика по кнопке удаления ???
+    //handlerOpenConfirmationPopup (data._id, newCard),
+    (cardId) => confirmationPopup.open(cardId, newCard),
+    userProfile.getUserId()
+  );
+  //console.log('data---',data);
+  //console.log('data.owner._id---', data.owner._id);
+  //console.log('userProfile.getUserId()---', userProfile.getUserId());
+  //console.log('data createCard', data);
+  //console.log(data._id);
   const cardElement = newCard.generateCard();
   return cardElement;
 }
+
+/* //обработчик открытия попапа подтверждения удаления
+const handlerOpenConfirmationPopup = (cardId, card) => {
+  confirmationPopup.open(cardId, card);
+} */
 
 //карточки из массива
 const defaultCard = new Section (
   {
     renderer: (item) => {
       const newCards = createCard (item);
+      //console.log('item', item);
       defaultCard.addItem(newCards);//вставляем карточки на страницу
     }
   },
-  '.cards')
+  '.cards');
   //defaultCard.rendererItems(initialCards);//передаем массив данных карточек
 
 //отрисовка карточки в DOM
 const renderCard = (data) => {
+  //console.log('data', data);
   cards.prepend(createCard(data));
 };
 
@@ -112,39 +157,25 @@ const addUserCard = () => {
     name: inputNameAddCardPopup.value,
     link: inputLinkAddCardPopup.value,
   };
-  console.log(cardItem);//ждем данные полей инпутов
-  api.postUserCard(cardItem);//передаем данные инпутов на сервер
-  //addNewUserCard(cardItem);
-  renderCard(cardItem);
+  api.postUserCard(cardItem)//передаем данные инпутов на сервер
+  .then ((res) => {//получили ответ от сервера
+    renderCard(res);//отрисовываем карточку на странице
+    //console.log(res);
+  })
 }
-
-/*
-//ТАК РАБОТАЕТ↓
-
-function addNewUserCard (data) {
-  fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {
-    method: 'POST',
-    headers: {
-      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(
-      data
-    )
-  });
-}
-*/
-
 
 //ПОПАПЫ
 //попап редактирования профиля
-const popupFormProfile = new PopupWithForm ('.profile-popup', handleFormSubmitEdit);
+const popupFormProfile = new PopupWithForm ('.profile-popup', handlerFormSubmitEdit);
 popupFormProfile.setEventListeners();
 //попап добавления пользовательской карточки
 const popupAddCard = new PopupWithForm ('.add-card-popup', addUserCard);
 popupAddCard.setEventListeners();
-const popupZoomImage = new PopupWithImage('.zoom-img-popap');
+const popupZoomImage = new PopupWithImage('.zoom-img-popup');
 popupZoomImage.setEventListeners();
+//попап подтверждения удаления карточки
+const confirmationPopup = new СonfirmationPopup ('.delete-card-popup', handlerFormSubmitСonfirmation);
+confirmationPopup.setEventListeners();
 
 //СЛУШАТЕЛИ
 //открываем попап редактирования профиля

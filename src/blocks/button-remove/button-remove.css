@@ -17,11 +17,3 @@
   opacity: 0.5;
 }
 
-/*перенести в отдельный файл*/
-.button-remove_show {
-display: block;
-}
-
-.test {
-  opacity: 1;
- }

@@ -10,6 +10,7 @@
          <img src="<%=require('./images/logo-mesto.svg')%>" alt="Логотип Место." class="logo">
       </header>
       <main>
+        <!-- профиль пользователя -->
          <section aria-label="Профиль пользователя" class="profile">
             <div class="profile__user">
                <img src="<%=require('./images/avatar.jpg')%>" alt="Портрет Кусто." class="profile__avatar">
@@ -23,22 +24,29 @@
             </div>
             <button type="button" aria-label="Добавить фотографию." class="add-button"></button>
          </section>
+         <!-- галлерея фотографий -->
          <section aria-label="Фотографии пользователя" class="cards">
+           <!-- темплит карточки -->
             <template id="templite-card">
                <article class="card">
                   <div class="card__image"></div>
                   <div class="card__name">
                      <h2 class="card__title"></h2>
-                     <button type="button" aria-label="Мне нравится." class="button-like"></button>
+                     <div class="card__like">
+                      <button type="button" aria-label="Мне нравится." class="card__like-button button-like"></button>
+                      <span class="card__like-counter">0</span>
+                     </div>
                   </div>
                   <button type="button" aria-label="Удалить." class="button-remove"></button>
                </article>
             </template>
          </section>
       </main>
+      <!-- подвал -->
       <footer class="footer">
          <p class="author">&#169; 2020 Mesto Russia</p>
       </footer>
+      <!-- попап редактирования профиля -->
       <div class="popup profile-popup">
          <div class="popup__container">
             <form name="personalia" novalidate method="post" class="edit-form edit-form-profile">
@@ -52,6 +60,7 @@
             <button type="button" aria-label="Закрыть." class="close-button"></button>
          </div>
       </div>
+      <!-- попап создания карточки пользователя -->
       <div class="popup add-card-popup">
          <div class="popup__container">
             <form name="personalia" novalidate  method="post" id ="add-form" class="edit-form edit-form-add-card">
@@ -65,19 +74,23 @@
             <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>
          </div>
       </div>
-      <div class="popup zoom-img-popap">
+      <!-- попап zoom-картинки -->
+      <div class="popup zoom-img-popup">
          <div class="popup__card">
             <div class="user-photo">
-               <img class="popap-photo" alt="#" src="#">
+               <img class="popup-photo" alt="#" src="#">
                <button type="button" aria-label="Закрыть." class="close-button" id="close-img-card"></button>
-               <h2 class="popap-photo-title">Текст картинки</h2>
+               <h2 class="popup-photo-title">Текст картинки</h2>
             </div>
          </div>
       </div>
-      <div class="popup delete-card-popap test">
+      <!-- попап подтверждения удаления карточки -->
+      <div class="popup delete-card-popup">
         <div class="popup__container">
+          <form name="confirmation" novalidate  method="post" class="edit-form">
           <h2 class="edit-form__title">Вы уверены?</h2>
-          <button type="button" class="save-button">Да</button>
+          <button type="submit" class="save-button">Да</button>
+          </form>
           <button type="button" aria-label="Закрыть." class="close-button"></button>
         </div>
       </div>

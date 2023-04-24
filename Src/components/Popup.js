@@ -21,7 +21,7 @@ export default class Popup {
       this.close ();
     }
   }
-  //слушатель
+  //слушатели
   setEventListeners () {
     //слушатель кнопки "Закрыть"
     this._closeButton.addEventListener('click', () => {

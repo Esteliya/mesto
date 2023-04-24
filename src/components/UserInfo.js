@@ -12,9 +12,16 @@ export default class UserInfo {
     };
   }
 
-  //создает новые данне пользователя (получаем из формы)
-  setUserInfo({name, about}) {
+  //создаем новые данне пользователя (получаем из формы)
+  setUserInfo({ name, about, _id }) {
     this.name.textContent = name;//передаем имя
     this.about.textContent = about;//передаем данные о пользователе
+    this._userId = _id;
+  }
+
+  //возвращаем ID пользователя
+  getUserId () {
+    //console.log('id пользователя: ', this._userId);
+    return this._userId;
   }
 }
