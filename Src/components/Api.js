@@ -6,7 +6,6 @@ class Api {
 //проверяем ответ сервера
   _checkResponse (res) {
     if (res.ok) {//если все ок
-      //console.log(res);
       return res.json();//вернули данные (объект)
     } else {
       Promise.reject(res.status);//завершаем действия с ошибкой
@@ -62,6 +61,16 @@ class Api {
   })
   .then(this._checkResponse);
  }
+
+ //отправляем аватарку
+ patchAvatar(avatar) {
+  return fetch(`${this._url}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: this._headers,
+    body: JSON.stringify({ avatar }),
+  })
+  .then(this._checkResponse);
+}
 
 }
 

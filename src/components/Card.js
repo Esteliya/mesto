@@ -33,7 +33,7 @@ class Card {
 
     this._image.style.backgroundImage = `url(${this._link})`;
     this._element.querySelector('.card__title').textContent = this._name;
-    this._createDeleteButton ();
+    this._visualButtonDelete ();
 
     return this._element;
   }
@@ -75,7 +75,7 @@ class Card {
   }
 
   //показываем кнопку удаления -> проверяем по id создателя
-  _createDeleteButton () {
+  _visualButtonDelete () {
     if (this._userId === this._ownerId) {
       //console.log('userId',this._userId);
       //console.log('ownerId',this._ownerId);
@@ -85,6 +85,30 @@ class Card {
       this._delete.classList.add('button-remove_show');
     }
   }
+  //обработчки кнопки лайка
+  _handlerLikeCard () {
+//????? КАК ?????
+  }
+
+  /* //отображение кнопки удаления
+  _visualButtonDelete () {
+    this._element.querySelector('.button-remove').classList.add('button-remove_show');
+} */
+   //кнопка лайка в карточке
+   _handlerLikeButton() {
+    this._like.classList.toggle('button-like_activ');
+  }
+  //удаление карточки из разметки
+  handlerDeleteButton() {
+    this._element.remove();
+    this._element = null;
+  }
+  /* //обработчик клика по кнопке удаления карточки (с сервера)
+  _handlerClickDeleteButton () {
+    this._handlerOpenConfirmationPopup(this._id);
+  } */
+
+
 
   //обработчик слушателей
   _setEventListeners() {
@@ -108,25 +132,6 @@ class Card {
       this._handlerOpenConfirmationPopup(this._id);
     });
   }
-   //кнопка лайка в карточке
-   _handlerLikeButton() {
-    this._like.classList.toggle('button-like_activ');
-  }
-  //удаление карточки из разметки
-  handlerDeleteButton() {
-    this._element.remove();
-    this._element = null;
-  }
-  /* //обработчик клика по кнопке удаления карточки (с сервера)
-  _handlerClickDeleteButton () {
-    this._handlerOpenConfirmationPopup(this._id);
-  } */
-  //отображение кнопки удаления
-  _visualButtonDelete () {
-    this._element.querySelector('.button-remove').classList.add('button-remove_show');
-
-
-}
 }
 
 //ЭКСПОРТ

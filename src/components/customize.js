@@ -58,7 +58,7 @@ const selectors = {
   spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки
   };
 
-  //настройки api
+  //настройки api 
   const apiSetting = {
     url: 'https://mesto.nomoreparties.co/v1/cohort-64',
     headers: {

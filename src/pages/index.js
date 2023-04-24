@@ -13,7 +13,6 @@ import {
   inputNameAddCardPopup,
   inputLinkAddCardPopup,
   formAddCardPopup,
- //apiSetting,//настройки api
 } from "../components/customize.js";
 
 import { Card } from "../components/Card.js";
@@ -44,28 +43,11 @@ const api = new Api(apiSetting);
 Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
 .then (([userData, cardsData]) => {
   userProfile.setUserInfo (userData);//выводим на страницу данные профиля
-
-  //console.log('cardsData', cardsData);//массив карточек
   defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
 })
 .catch((err) => {
-  console.log(`Ошибка: ${err}`);
+  console.error(`Ошибка: ${err}`);
 });
-
-/* //запрашиваем данные пользователя
-api.getUserInfo()
-.then((result) => {
-  //debugger;
-  userName.textContent = result.name;
-  userAbout.textContent = result.about;
-}); */
-
-/* //запрашиваем массив карточек с сервера
-api.getArrCards()
-.then ((res) => {
-  //console.log(res);//получили массив
-  defaultCard.rendererItems(res);//вугрузили карточки с сервера
-}); */
 
 //открываем попап редактирования профиля. Вызываем в слушателе кнопки редактирования.
 const popupEditProfile = () => {
@@ -83,91 +65,50 @@ const userProfile = new UserInfo({
   aboutSelector: ".profile__user-profession",//html-строка профессии
 });
 
-//передаем в профиль данные из формы. Вызываем при создании попапа.
+//ОБРАБОТЧИКИ ФОРМ
+//обработчик формы данных профиля: данные из формы —> в профиль. Вызываем при создании попапа.
 const handlerFormSubmitEdit = (data)=> {
-  //console.log(data);//ждем данные полей инпутов
+  popupFormProfile.disableButton("Сохранение...");//меняем текст кнопки
   api.patchUserInfo(data)//передаем данные инпутов на сервер +
   .then ((res) => {
-    popupFormProfile.disableButton("Сохранение...");
-    userProfile.setUserInfo(res
-      /* {name: data.name,//инпут имени
-    about: data.about,//инпут профессии
-  } */
-    );
+    //popupFormProfile.disableButton("Сохранение...");//меняем текст кнопки
+    userProfile.setUserInfo(res);
   })
   .catch((error) => {
-    console.log(`Ошибка: ${error}`)
+    console.error(`Ошибка: ${error}`)
   })
   .finally(() => {
-    popupFormProfile.disableButton("Сохранить", false);
+    popupFormProfile.disableButton("Сохранить", false);//возвращаем текст кнопки
   })
 
 }
 //обработчик формы подтверждения удаления
 const handlerFormSubmitСonfirmation = (cardId, newCard) => {
-  confirmationPopup.disableButton("Удаление...");
-//console.log('все работает');
+  confirmationPopup.disableButton("Удаление...");//меняем текст кнопки
 api.deleteCard (cardId)
 .then (() => {
   newCard.handlerDeleteButton();//удаляем карточку из разметки
   confirmationPopup.close();//закрываем попап
 })
 .catch((error) => {
-  console.log(`Ошибка: ${error}`)
+  console.error(`Ошибка: ${error}`)
 })
 .finally(() => {
-  confirmationPopup.disableButton("Да", false);
+  confirmationPopup.disableButton("Да", false);//возвращаем текст кнопки
 })
 };
 
-//СОЗДАЕМ КАРТОЧКИ
 
-//создание карточки
-function createCard (data) {
-  const newCard = new Card(
-    data,
-    '#templite-card',
-    () => {
-      popupZoomImage.open(data);
-    },
-    //функция обработчик клика по кнопке удаления ???
-    //handlerOpenConfirmationPopup (data._id, newCard),
-    (cardId) => confirmationPopup.open(cardId, newCard),
-    userProfile.getUserId()
-  );
-  //console.log('data---',data);
-  //console.log('data.owner._id---', data.owner._id);
-  //console.log('userProfile.getUserId()---', userProfile.getUserId());
-  //console.log('data createCard', data);
-  //console.log(data._id);
-  const cardElement = newCard.generateCard();
-  return cardElement;
-}
+//обработчик формы редактирования аватарки ?????
+const addAvatar = (data) => {
+//?????????*???????
+popupAddAvatar.disableButton("Сохранение...");//меняем текст кнопки
+alert('форма работает', data);
 
-/* //обработчик открытия попапа подтверждения удаления
-const handlerOpenConfirmationPopup = (cardId, card) => {
-  confirmationPopup.open(cardId, card);
-} */
-
-//карточки из массива
-const defaultCard = new Section (
-  {
-    renderer: (item) => {
-      const newCards = createCard (item);
-      //console.log('item', item);
-      defaultCard.addItem(newCards);//вставляем карточки на страницу
-    }
-  },
-  '.cards');
-  //defaultCard.rendererItems(initialCards);//передаем массив данных карточек
-
-//отрисовка карточки в DOM
-const renderCard = (data) => {
-  //console.log('data', data);
-  cards.prepend(createCard(data));
 };
 
-// создаем карточку пользователя
+
+// обработчик формы создания новой карточки
 const addUserCard = () => {
   const cardItem = {
     name: inputNameAddCardPopup.value,
@@ -176,9 +117,44 @@ const addUserCard = () => {
   api.postUserCard(cardItem)//передаем данные инпутов на сервер
   .then ((res) => {//получили ответ от сервера
     renderCard(res);//отрисовываем карточку на странице
-    //console.log(res);
+  })
+  .catch((error) => {
+    console.error(`Ошибка: ${error}`)
+  })
+  .finally(() => {
+    confirmationPopup.disableButton("Да", false);//возвращаем текст кнопки
+    popupAddAvatar.disableButton("Сохранение...");//меняем текст кнопки
+
   })
 }
+//СОЗДАЕМ КАРТОЧКИ
+//создание карточки
+function createCard (data) {
+  const newCard = new Card(
+    data,
+    '#templite-card',
+    () => {
+      popupZoomImage.open(data);
+    },
+    (cardId) => confirmationPopup.open(cardId, newCard),//функция обработчик клика по кнопке удаления
+    userProfile.getUserId()
+  );
+  const cardElement = newCard.generateCard();
+  return cardElement;
+}
+//карточки из массива
+const defaultCard = new Section (
+  {
+    renderer: (item) => {
+      const newCards = createCard (item);
+      defaultCard.addItem(newCards);//вставляем карточки на страницу
+    }
+  },
+  '.cards');
+//отрисовка карточки в DOM
+const renderCard = (data) => {
+  cards.prepend(createCard(data));
+};
 
 //ПОПАПЫ
 //попап редактирования профиля
@@ -192,6 +168,9 @@ popupZoomImage.setEventListeners();
 //попап подтверждения удаления карточки
 const confirmationPopup = new СonfirmationPopup ('.delete-card-popup', handlerFormSubmitСonfirmation);
 confirmationPopup.setEventListeners();
+//попап редактирования аватарки
+const popupAddAvatar = new PopupWithForm ('.add-avatar-popup', addAvatar);
+popupAddAvatar.setEventListeners();
 
 //СЛУШАТЕЛИ
 //открываем попап редактирования профиля
