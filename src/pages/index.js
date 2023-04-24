@@ -7,12 +7,14 @@ import {
   cards,
   userName,
   userAbout,
+  avatarImg,
   nameEdit,
   profEdit,
   editForm,
   inputNameAddCardPopup,
   inputLinkAddCardPopup,
   formAddCardPopup,
+  editAvatar,
 } from "../components/customize.js";
 
 import { Card } from "../components/Card.js";
@@ -35,6 +37,9 @@ validatorEditProfile.enableValidation();
 const validatorformAddCard = new FormValidator(selectors, formAddCardPopup);
 validatorformAddCard.enableValidation();
 
+//валидация формы редактирования аватарки
+const validatorEditAvatar = new FormValidator(selectors, editAvatar);
+validatorEditAvatar.enableValidation();
 
 //API
 const api = new Api(apiSetting);
@@ -43,7 +48,9 @@ const api = new Api(apiSetting);
 Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
 .then (([userData, cardsData]) => {
   userProfile.setUserInfo (userData);//выводим на страницу данные профиля
+
   defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
+  //userProfile.patchAvatar(userData);//заправшиваем картинку с сервера
 })
 .catch((err) => {
   console.error(`Ошибка: ${err}`);
@@ -63,6 +70,7 @@ const popupEditProfile = () => {
 const userProfile = new UserInfo({
   nameSelector: ".profile__user-firstname",//html-строка имени профиля
   aboutSelector: ".profile__user-profession",//html-строка профессии
+  avatarSelector: ".profile__avatar",//html <img src=#>
 });
 
 //ОБРАБОТЧИКИ ФОРМ
@@ -71,7 +79,6 @@ const handlerFormSubmitEdit = (data)=> {
   popupFormProfile.disableButton("Сохранение...");//меняем текст кнопки
   api.patchUserInfo(data)//передаем данные инпутов на сервер +
   .then ((res) => {
-    //popupFormProfile.disableButton("Сохранение...");//меняем текст кнопки
     userProfile.setUserInfo(res);
   })
   .catch((error) => {
@@ -101,12 +108,23 @@ api.deleteCard (cardId)
 
 //обработчик формы редактирования аватарки ?????
 const addAvatar = (data) => {
-//?????????*???????
+ // debugger;
 popupAddAvatar.disableButton("Сохранение...");//меняем текст кнопки
-alert('форма работает', data);
-
+console.log('форма работает', data);
+api.patchAvatar(data)
+.then ((res) => {
+console.log('данные ушли на сервер', res);//???
+//debugger;
+userProfile.setUserAvatar(res);//вставить картинку в разметку
+popupAddAvatar.close();//закрываем попап
+})
+.catch((error) => {
+  console.error(`Ошибка: ${error}`)
+})
+.finally(() => {
+  popupAddAvatar.disableButton("Сохранить", false);//возвращаем текст кнопки
+})
 };
-
 
 // обработчик формы создания новой карточки
 const addUserCard = () => {
@@ -139,6 +157,7 @@ function createCard (data) {
     (cardId) => confirmationPopup.open(cardId, newCard),//функция обработчик клика по кнопке удаления
     userProfile.getUserId()
   );
+  //console.log(data);
   const cardElement = newCard.generateCard();
   return cardElement;
 }
@@ -180,3 +199,10 @@ addButton.addEventListener('click', () => {
   popupAddCard.open();
   validatorformAddCard.removeValidationErrors();
 });
+//открываем попап редактирования аватарки
+avatarImg.addEventListener('click', () => {
+  //debugger;
+  popupAddAvatar.open();
+  validatorEditAvatar.removeValidationErrors();//сброс ошибок валидации
+});
+

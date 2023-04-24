@@ -1,7 +1,8 @@
 export default class UserInfo {
-  constructor({nameSelector, aboutSelector}) {
+  constructor({nameSelector, aboutSelector, avatarSelector}) {
     this.name = document.querySelector(nameSelector);//имя пользователя
     this.about = document.querySelector(aboutSelector);//поле о себе
+    this._avatar = document.querySelector(avatarSelector);//аватарка
   }
 
   //вернем данные пользователя (для заполнения формы)
@@ -23,5 +24,12 @@ export default class UserInfo {
   getUserId () {
     //console.log('id пользователя: ', this._userId);
     return this._userId;
+  }
+
+  //изменяем аватарку профиля
+  setUserAvatar ({avatar}) {
+    //debugger;
+    console.log('avatar в setUserAvatar', avatar);
+    this._avatar.src = avatar;
   }
 }

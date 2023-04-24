@@ -17,6 +17,7 @@ _showInputError = (inputElement) => {
 
 //скрываем ошибку (удаляем класс)
 _hideInputError = (inputElement) => {
+  //debugger;
   const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(this._data.inputErrorSelector);//убираем подчеркивание
   errorElement.classList.remove(this._data.spanErrorSelector);//скрываем блок с ошибкой

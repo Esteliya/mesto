@@ -62,12 +62,12 @@ class Api {
   .then(this._checkResponse);
  }
 
- //отправляем аватарку
+ //отправляем аватарку на сервер
  patchAvatar(avatar) {
   return fetch(`${this._url}/users/me/avatar`, {
     method: 'PATCH',
     headers: this._headers,
-    body: JSON.stringify({ avatar }),
+    body: JSON.stringify( avatar ),
   })
   .then(this._checkResponse);
 }

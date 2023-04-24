@@ -7,49 +7,19 @@
   justify-content: center;
   align-items: center;
   opacity: 1;
-  transition: all 0.6s ease;
+  transition: opacity 0.6s ease;
 }
 .profile__avatar:hover {
   opacity: 0.2;
 
 }
 
-/* ПЕРЕЛОЖИТЬ В ОТДЕЛЬНЫЙ ФАЙЛ!!!! */
-@media screen and (max-width: 922px) {
-    .profile__avatar {
-        /* margin-right: 15px; */
-    }
-    .avatar-block {
-      margin-right: 15px;
-    }
-}
 @media screen and (max-width: 716px) {
     .profile__avatar {
         width: 100%;
-    }
-    .avatar-block {
-      width: 45%;
-      margin: 0 0 26px;
     }
 }
 @media screen and (max-width: 320px) {
     .profile__avatar {
      }
-     .avatar-block {
-      width: 120px;
-    }
 }
-
-.avatar-block {
-  display: flex;
-  min-width: 120px;
-  min-height: 120px;
-  border-radius: 50%;
-  background-image: url(../../../images/edit-avatar.svg);
-  background-color: #000;
-  background-position: center;
-  background-repeat: no-repeat;
-  aspect-ratio: 1/1;
-}
-
-

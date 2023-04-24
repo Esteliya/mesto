@@ -37,6 +37,7 @@ const addButton = document.querySelector('.add-button');//кнопка доба�
 const cards = document.querySelector('.cards')//блок с карточками
 const userName = document.querySelector('.profile__user-firstname');//имя профиля
 const userAbout = document.querySelector('.profile__user-profession');//о себе
+const avatarImg = document.querySelector('.profile__avatar');//аватарка
 //ПОПАПЫ
 //попап редактирования профиля
 const nameEdit = document.getElementById('firstname');//инпут имя профиля
@@ -48,6 +49,9 @@ const inputNameAddCardPopup = document.getElementById('name-card');//поле з
 const inputLinkAddCardPopup = document.getElementById('images');//поле заполнения ссылки img
 const formAddCardPopup = document.querySelector('.edit-form-add-card');//форма с инпутами
 
+//попап редактирования аватарки
+const editAvatar = document.querySelector('.edit-form-avatar');//форма заполнения попапа
+
 
 const selectors = {
   formSelector: '.edit-form',//форма
@@ -58,7 +62,7 @@ const selectors = {
   spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки
   };
 
-  //настройки api 
+  //настройки api
   const apiSetting = {
     url: 'https://mesto.nomoreparties.co/v1/cohort-64',
     headers: {
@@ -76,11 +80,13 @@ const selectors = {
   cards,
   userName,
   userAbout,
+  avatarImg,
   nameEdit,
   profEdit,
   editForm,
   inputNameAddCardPopup,
   inputLinkAddCardPopup,
   formAddCardPopup,
+  editAvatar,
   apiSetting,
 };
