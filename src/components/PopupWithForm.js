@@ -24,6 +24,12 @@ export default class PopupWithForm extends Popup {
     this._form.reset();//сбрасываем данные формы
   }
 
+  //неактивная кнопка
+  disableButton(text, disable = true) {
+    this._button.disable = disable;
+    this._button.textContent = text;
+  }
+  
   setEventListeners () {
     super.setEventListeners();
     //слушаем форму

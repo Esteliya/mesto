@@ -87,21 +87,37 @@ const userProfile = new UserInfo({
 const handlerFormSubmitEdit = (data)=> {
   //console.log(data);//ждем данные полей инпутов
   api.patchUserInfo(data)//передаем данные инпутов на сервер +
-     userProfile.setUserInfo({
-    name: data.name,//инпут имени
+  .then ((res) => {
+    popupFormProfile.disableButton("Сохранение...");
+    userProfile.setUserInfo(res
+      /* {name: data.name,//инпут имени
     about: data.about,//инпут профессии
-  });
+  } */
+    );
+  })
+  .catch((error) => {
+    console.log(`Ошибка: ${error}`)
+  })
+  .finally(() => {
+    popupFormProfile.disableButton("Сохранить", false);
+  })
+
 }
 //обработчик формы подтверждения удаления
 const handlerFormSubmitСonfirmation = (cardId, newCard) => {
+  confirmationPopup.disableButton("Удаление...");
 //console.log('все работает');
 api.deleteCard (cardId)
 .then (() => {
-  newCard.handlerDeleteButton();
-  confirmationPopup.close();
+  newCard.handlerDeleteButton();//удаляем карточку из разметки
+  confirmationPopup.close();//закрываем попап
 })
-.catch((error) => console.log(`Ошибка: ${error}`))
-
+.catch((error) => {
+  console.log(`Ошибка: ${error}`)
+})
+.finally(() => {
+  confirmationPopup.disableButton("Да", false);
+})
 };
 
 //СОЗДАЕМ КАРТОЧКИ
