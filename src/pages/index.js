@@ -47,10 +47,10 @@ const api = new Api(apiSetting);
 //получаем одновременно данные сервера
 Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
 .then (([userData, cardsData]) => {
+  console.log ('userData', userData);
   userProfile.setUserInfo (userData);//выводим на страницу данные профиля
-
+  userProfile.setUserAvatar (userData);//заправшиваем картинку с сервера
   defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера
-  //userProfile.patchAvatar(userData);//заправшиваем картинку с сервера
 })
 .catch((err) => {
   console.error(`Ошибка: ${err}`);
