@@ -48,6 +48,7 @@ const api = new Api(apiSetting);
 Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользователя и массив карточек
 .then (([userData, cardsData]) => {
   console.log ('userData', userData);
+  console.log ('cardsData', cardsData);
   userProfile.setUserInfo (userData);//выводим на страницу данные профиля
   userProfile.setUserAvatar (userData);//заправшиваем картинку с сервера
   defaultCard.rendererItems(cardsData);//запрашиваем массив карточек с сервера

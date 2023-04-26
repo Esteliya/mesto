@@ -4,6 +4,7 @@ class Card {
     this._name = data.name;//имя
     this._link = data.link;//картинка
     this._id = data._id;//id карточки ???
+    this._likes = data.likes;
     this._ownerId = data.owner._id;
     this._templateSelector = templateSelector;//темплит
     this._handlerCardClick = handlerCardClick;//обработчик клика по карточке
@@ -27,6 +28,9 @@ class Card {
     this._like = this._element.querySelector('.button-like');
     this._image = this._element.querySelector('.card__image');
     this._delete = this._element.querySelector('.button-remove');
+    this._counter = this._element.querySelector('.card__like-counter');
+    this._defoulteLike ();
+
     //console.log('this._delete', this._delete);
     this._setEventListeners();
     //this._requestId();
@@ -37,7 +41,10 @@ class Card {
 
     return this._element;
   }
-
+//дефолтное количество лайков
+  _defoulteLike () {
+    this._counter.textContent = this._likes.length;
+  }
 /*
   _requestId () {
     fetch('https://mesto.nomoreparties.co/v1/cohort-64/cards', {

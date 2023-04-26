@@ -18,6 +18,7 @@ export default class UserInfo {
     this.name.textContent = name;//передаем имя
     this.about.textContent = about;//передаем данные о пользователе
     this._userId = _id;
+   // this._likes = likes;
   }
 
   //возвращаем ID пользователя
