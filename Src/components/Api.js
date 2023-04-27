@@ -74,6 +74,8 @@ class Api {
 
 //добавляем лайк карточке
 putLike (cardId) {
+	console.log('cardId = ' + cardId); // undefined
+
   return fetch(`${this._url}/cards/${cardId}/likes`, {
     method: "PUT",
     headers: this._headers,

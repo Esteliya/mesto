@@ -146,6 +146,10 @@ const addUserCard = () => {
 
   })
 }
+
+//ОБРАБОТЧИК КНОПКИ
+
+
 //СОЗДАЕМ КАРТОЧКИ
 //создание карточки
 function createCard (data) {
@@ -155,8 +159,36 @@ function createCard (data) {
     () => {
       popupZoomImage.open(data);
     },
-    (cardId) => confirmationPopup.open(cardId, newCard),//функция обработчик клика по кнопке удаления
-    userProfile.getUserId()
+    (cardId) => {
+      confirmationPopup.open(cardId, newCard)
+    },//функция обработчик клика по кнопке удаления
+    //обработчик лайка
+    (cardId) => {
+      //debugger;
+
+			// console.warn('cardId = ' + cardId); // undefinded
+			//console.warn('data._id = ' + data._id);
+
+    //console.log('функция-обработчик работает');
+			if (! newCard.checkMyLiked() ) {
+				api.putLike(data._id)
+					.then((res) => {
+						newCard.updateLikes(res);
+					})
+					.catch((error) => {
+						console.error(`Ошибка putLike: ${error}`)
+					})
+    	}else {
+				api.deleteLike(data._id)
+					.then((res) => {
+						newCard.updateLikes(res);
+					})
+					.catch((error) => {
+						console.error(`Ошибка deleteLike: ${error}`)
+					})
+			}
+    },
+    userProfile.getUserId()//вернули id
   );
   //console.log(data);
   const cardElement = newCard.generateCard();

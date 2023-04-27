@@ -13,8 +13,8 @@ export default class Section {
   }
 //массив данных ждем извне(!)
   rendererItems(items) {
-    items.forEach((item) => {
-      this._renderer(item);
+    items.forEach((item, index) => {
+				this._renderer(item);
     });
   }
 }

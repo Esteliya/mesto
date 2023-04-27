@@ -30,7 +30,7 @@ export default class UserInfo {
   //изменяем аватарку профиля
   setUserAvatar ({avatar}) {
     //debugger;
-    console.log('avatar в setUserAvatar', avatar);
+    //console.log('avatar в setUserAvatar', avatar);
     this._avatar.src = avatar;
   }
 }
