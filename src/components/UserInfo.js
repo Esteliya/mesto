@@ -18,19 +18,15 @@ export default class UserInfo {
     this.name.textContent = name;//передаем имя
     this.about.textContent = about;//передаем данные о пользователе
     this._userId = _id;
-   // this._likes = likes;
   }
 
   //возвращаем ID пользователя
   getUserId () {
-    //console.log('id пользователя: ', this._userId);
     return this._userId;
   }
 
   //изменяем аватарку профиля
   setUserAvatar ({avatar}) {
-    //debugger;
-    //console.log('avatar в setUserAvatar', avatar);
     this._avatar.src = avatar;
   }
 }

@@ -35,8 +35,6 @@ const addButton = document.querySelector('.add-button');//кнопка доба�
 //СЕКЦИИ И БЛОКИ НА СТРАНИЦЕ
 //профиль на странице
 const cards = document.querySelector('.cards')//блок с карточками
-const userName = document.querySelector('.profile__user-firstname');//имя профиля
-const userAbout = document.querySelector('.profile__user-profession');//о себе
 const avatarImg = document.querySelector('.profile__avatar');//аватарка
 //ПОПАПЫ
 //попап редактирования профиля
@@ -60,26 +58,33 @@ const selectors = {
   disabledButtonSelector: 'save-button-disabled',//неактивная кнопка
   inputErrorSelector: 'input-error',//нижнее подчеркивание инпута
   spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки
-  };
+  nameSelector: ".profile__user-firstname",//html-строка имени профиля
+  aboutSelector: ".profile__user-profession",//html-строка профессии
+  avatarSelector: ".profile__avatar",//html <img src=#>
+  templiteSelector: "#templite-card",//блок для карточек
+  popupProfile: ".profile-popup",//попап редактирования профиля
+  popupAddCard: ".add-card-popup",//попап создания новой карточки
+  popupZoom: ".zoom-img-popup",//попап zoom-картинки
+  popupDelete: ".delete-card-popup",//попап подтверждения удаления
+  popupAddAvatar: ".add-avatar-popup",//попап редактирования аватарки
+};
 
-  //настройки api
-  const apiSetting = {
-    url: 'https://mesto.nomoreparties.co/v1/cohort-64',
-    headers: {
-      authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
-      'Content-Type': 'application/json'
-    },
-  };
+//настройки api
+const apiSetting = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-64',
+  headers: {
+    authorization: '524c1b7c-bb91-4dd5-95f2-6bf707a74ceb',
+    'Content-Type': 'application/json'
+  },
+};
 
-  //ЭКСПОРТ
- export {
+//ЭКСПОРТ
+export {
   //initialCards,
   selectors,
   editButton,
   addButton,
   cards,
-  userName,
-  userAbout,
   avatarImg,
   nameEdit,
   profEdit,

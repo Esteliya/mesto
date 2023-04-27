@@ -28,7 +28,7 @@ export default class СonfirmationPopup extends Popup {
     //слушатель события формы
     this._form.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._handlerFormSubmit(this._cardId, this._card);//????
+      this._handlerFormSubmit(this._cardId, this._card);//+
     });
 }
 }
