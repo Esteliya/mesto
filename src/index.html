@@ -26,7 +26,6 @@
           <p class="profile__user-profession">Исследователь океана</p>
         </div>
       </div>
-      </div>
       <button type="button" aria-label="Добавить фотографию." class="add-button"></button>
     </section>
     <!-- галлерея фотографий -->
@@ -106,14 +105,14 @@
   <!-- попап редактирования аратарки -->
   <div class="popup add-avatar-popup">
     <div class="popup__container">
-      <form name="personalia" novalidate method="post" id="add-form" class="edit-form edit-form-avatar">
+      <form name="personalia" novalidate method="post" id="add-form-avatar" class="edit-form edit-form-avatar">
         <h2 class="edit-form__title">Обновить аватар</h2>
         <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку"
           class="edit-form__personalia">
         <span class="avatar-error edit-form__personalia-error"></span>
         <button type="submit" class="save-button">Создать</button>
       </form>
-      <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>
+      <button type="button" aria-label="Закрыть." class="close-button" id="close-add-avatar"></button>
     </div>
   </div>
 </body>
