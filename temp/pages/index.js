@@ -129,6 +129,7 @@ const addUserCard = () => {
     name: inputNameAddCardPopup.value,
     link: inputLinkAddCardPopup.value,
   };
+  //console.log('inputs', inputs);
   api.postUserCard(cardItem)//передаем данные инпутов на сервер
     .then((res) => {//получили ответ от сервера
       renderCard(res);//отрисовываем карточку на странице
