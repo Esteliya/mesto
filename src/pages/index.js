@@ -55,16 +55,6 @@ Promise.all([api.getUserInfo(), api.getArrCards()])//данные пользов
     console.error(`Ошибка: ${err}`);
   });
 
-//открываем попап редактирования профиля. Вызываем в слушателе кнопки редактирования.
-const popupEditProfile = () => {
-  const defaultUserData = userProfile.getUserInfo();//данные по умолчанию (ловим из профиля)
-  //переносим данные в инпуты формы
-  nameEdit.value = defaultUserData.name;//в инпут имени дефолтное имя
-  profEdit.value = defaultUserData.about;//в инпут профессии дефолтную профессиию
-  validatorEditProfile.removeValidationErrors();//сбрасываем ошибки
-  popupFormProfile.open();//открыли попап редактирования профиля
-}
-
 //ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
 const userProfile = new UserInfo({
   nameSelector: selectors.nameSelector,//html-строка имени профиля
@@ -73,12 +63,24 @@ const userProfile = new UserInfo({
 });
 
 //ОБРАБОТЧИКИ ФОРМ
+
+//обработчик попапа редактирования профиля. Вызываем в слушателе кнопки редактирования.
+const handlerPopupEditProfile = () => {
+  const defaultUserData = userProfile.getUserInfo();//данные по умолчанию (ловим из профиля)
+  //переносим данные в инпуты формы
+  nameEdit.value = defaultUserData.name;//в инпут имени дефолтное имя
+  profEdit.value = defaultUserData.about;//в инпут профессии дефолтную профессиию
+  validatorEditProfile.removeValidationErrors();//сбрасываем ошибки
+  popupFormProfile.open();//открыли попап редактирования профиля
+}
+
 //обработчик формы данных профиля: данные из формы —> в профиль. Вызываем при создании попапа.
 const handlerFormSubmitEdit = (data) => {
   popupFormProfile.disableButton("Сохранение...");//меняем текст кнопки
   api.patchUserInfo(data)//передаем данные инпутов на сервер +
     .then((res) => {
       userProfile.setUserInfo(res);
+      popupFormProfile.close();
     })
     .catch((error) => {
       console.error(`Ошибка: ${error}`)
@@ -124,22 +126,18 @@ const addAvatar = (data) => {
 };
 
 // обработчик формы создания новой карточки
-const addUserCard = () => {
-  const cardItem = {
-    name: inputNameAddCardPopup.value,
-    link: inputLinkAddCardPopup.value,
-  };
-  //console.log('inputs', inputs);
-  api.postUserCard(cardItem)//передаем данные инпутов на сервер
+const addUserCard = (data) => {
+  popupAddCard.disableButton("Сохранение...");//меняем текст кнопки
+  api.postUserCard(data)//передаем данные инпутов на сервер
     .then((res) => {//получили ответ от сервера
-      renderCard(res);//отрисовываем карточку на странице
+      cards.prepend(createCard(res));
+      popupAddCard.close();
     })
     .catch((error) => {
       console.error(`Ошибка: ${error}`)
     })
     .finally(() => {
-      confirmationPopup.disableButton("Да", false);//возвращаем текст кнопки
-      popupAddAvatar.disableButton("Сохранение...");//меняем текст кнопки
+      popupAddCard.disableButton("Сохранить");//меняем текст кнопки
 
     })
 }
@@ -192,10 +190,6 @@ const defaultCard = new Section(
     }
   },
   '.cards');
-//отрисовка карточки в DOM
-const renderCard = (data) => {
-  cards.prepend(createCard(data));
-};
 
 //ПОПАПЫ
 //попап редактирования профиля
@@ -215,7 +209,7 @@ popupAddAvatar.setEventListeners();
 
 //СЛУШАТЕЛИ
 //открываем попап редактирования профиля
-editButton.addEventListener('click', popupEditProfile);//открываем попап редактирования профиля
+editButton.addEventListener('click', handlerPopupEditProfile);//открываем попап редактирования профиля
 //открываем попап добавления пользовательской карточки
 addButton.addEventListener('click', () => {
   popupAddCard.open();

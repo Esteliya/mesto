@@ -7,7 +7,7 @@ export default class PopupWithForm extends Popup {
     this._submitForm = submitForm;//ждем коллбэк отправки формы
     this._form = this._popup.querySelector('.edit-form');//форма попапа
     this._inputs = Array.from(this._form.querySelectorAll('.edit-form__personalia'))//массив инпутов
-    this._button = this._form.querySelector('.save-button');//кнопка сохранить
+    this._button = this._form.querySelector('.popup__save-button');//кнопка сохранить
   }
 
   //получаем значения инпутов
@@ -29,14 +29,13 @@ export default class PopupWithForm extends Popup {
     this._button.disable = disable;
     this._button.textContent = text;
   }
-  
+
   setEventListeners () {
     super.setEventListeners();
     //слушаем форму
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submitForm(this._getInputValues());
-      this.close();
     });
 }
 }

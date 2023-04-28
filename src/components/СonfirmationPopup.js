@@ -5,7 +5,7 @@ export default class СonfirmationPopup extends Popup {
   constructor (popupSelector, handlerFormSubmit) {//ждем обработчиик извне
     super(popupSelector);//родителя
     this._form = this._popup.querySelector('.edit-form');//форма попапа
-    this._button = this._form.querySelector('.save-button');//кнопка сохранить
+    this._button = this._form.querySelector('.popup__save-button');//кнопка сохранить
     this._handlerFormSubmit = handlerFormSubmit;
   }
 

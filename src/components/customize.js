@@ -24,7 +24,7 @@ const editAvatar = document.querySelector('.edit-form-avatar');//форма за
 const selectors = {
   formSelector: '.edit-form',//форма
   inputSelector: '.edit-form__personalia',//инпут в форме
-  buttonSelector: '.save-button',//кнопка сохранения
+  buttonSelector: '.popup__save-button',//кнопка сохранения
   disabledButtonSelector: 'save-button-disabled',//неактивная кнопка
   inputErrorSelector: 'input-error',//нижнее подчеркивание инпута
   spanErrorSelector: 'edit-form__personalia-error_active',//активная строка ошибки

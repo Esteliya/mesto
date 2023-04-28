@@ -61,9 +61,9 @@
         <input type="text" id="profession" required minlength="2" maxlength="200" name="about" placeholder="О себе"
           class="edit-form__personalia">
         <span class="profession-error edit-form__personalia-error"></span>
-        <button type="submit" class="save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
-      <button type="button" aria-label="Закрыть." class="close-button"></button>
+      <button type="button" aria-label="Закрыть." class="popup__close-button"></button>
     </div>
   </div>
   <!-- попап создания карточки пользователя -->
@@ -71,24 +71,24 @@
     <div class="popup__container">
       <form name="personalia" novalidate method="post" id="add-form" class="edit-form edit-form-add-card">
         <h2 class="edit-form__title">Новое место</h2>
-        <input type="text" required minlength="2" maxlength="30" id="name-card" name="name-card" placeholder="Название"
+        <input type="text" required minlength="2" maxlength="30" id="name-card" name="name" placeholder="Название"
           class="edit-form__personalia">
         <span class="name-card-error edit-form__personalia-error"></span>
-        <input type="url" required id="images" name="images" placeholder="Ссылка на картинку"
+        <input type="url" required id="images" name="link" placeholder="Ссылка на картинку"
           class="edit-form__personalia">
         <span class="images-error edit-form__personalia-error"></span>
-        <button type="submit" class="save-button">Создать</button>
+        <button type="submit" class="popup__save-button">Создать</button>
       </form>
-      <button type="button" aria-label="Закрыть." class="close-button" id="close-add-card"></button>
+      <button type="button" aria-label="Закрыть." class="popup__close-button" id="close-add-card"></button>
     </div>
   </div>
   <!-- попап zoom-картинки -->
-  <div class="popup zoom-img-popup">
+  <div class="popup popup_darck zoom-img-popup">
     <div class="popup__card">
-      <div class="user-photo">
-        <img class="popup-photo" alt="#" src="#">
-        <button type="button" aria-label="Закрыть." class="close-button" id="close-img-card"></button>
-        <h2 class="popup-photo-title">Текст картинки</h2>
+      <div class="popup__user-photo">
+        <img class="popup__photo" alt="#" src="#">
+        <button type="button" aria-label="Закрыть." class="popup__close-button" id="close-img-card"></button>
+        <h2 class="popup__photo-title">Текст картинки</h2>
       </div>
     </div>
   </div>
@@ -97,9 +97,9 @@
     <div class="popup__container">
       <form name="confirmation" novalidate method="post" class="edit-form">
         <h2 class="edit-form__title">Вы уверены?</h2>
-        <button type="submit" class="save-button">Да</button>
+        <button type="submit" class="popup__save-button">Да</button>
       </form>
-      <button type="button" aria-label="Закрыть." class="close-button"></button>
+      <button type="button" aria-label="Закрыть." class="popup__close-button"></button>
     </div>
   </div>
   <!-- попап редактирования аратарки -->
@@ -110,9 +110,9 @@
         <input type="url" required id="avatar" name="avatar" placeholder="Ссылка на картинку"
           class="edit-form__personalia">
         <span class="avatar-error edit-form__personalia-error"></span>
-        <button type="submit" class="save-button">Создать</button>
+        <button type="submit" class="popup__save-button">Создать</button>
       </form>
-      <button type="button" aria-label="Закрыть." class="close-button" id="close-add-avatar"></button>
+      <button type="button" aria-label="Закрыть." class="popup__close-button" id="close-add-avatar"></button>
     </div>
   </div>
 </body>
